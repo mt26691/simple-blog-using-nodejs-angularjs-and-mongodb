@@ -1,0 +1,21 @@
+<div class="row">
+    <div class="col-lg-12 text-center">
+        <h2>Môn học</h2>
+        <hr class="star-primary">
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-3" ng-repeat="subject in subjects">
+        <div class="subject-item">
+            <a href="/{{subject.nameUrl}}" class="hidden-xs hidden-sm">
+                <img src="{{subject.image.thumbnail}}" class="img-responsive" alt="{{subject.name}}">
+            </a>
+            
+            <a href="/{{subject.nameUrl}}" class="hidden-md hidden-lg">
+                <img src="{{subject.image.mid}}" class="img-responsive" alt="{{subject.name}}">
+            </a>
+            <a href="/{{subject.nameUrl}}" class="subject-name">{{subject.name}}</a>
+            <a href="/tai-khoan/{{subject.createdBy.id}}" class="author-name"><i class="fa fa-user"></i>  {{subject.createdBy.name}}</a>
+        </div>
+    </div>
+</div>
