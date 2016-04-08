@@ -32,11 +32,15 @@ module.exports = function(callback) {
                 //2
                 { name: "Article 03", nameUrl: "article-01", description: "description 03", content: "content", isActive: true, createdBy: data.newUsers[1].id, updatedBy: data.newUsers[1].id },
                 //3
-                { name: "Article 04", nameUrl: "article-01", description: "description 04", content: "content", inActiveReason: "Not valid", isActive: false, createdBy: data.newUsers[1].id, updatedBy: data.newUsers[1].id },
+                { name: "Article 04", nameUrl: "article-01", description: "description 04", content: "content", inActiveReason: "Not valid", isActive: true, createdBy: data.newUsers[1].id, updatedBy: data.newUsers[1].id },
                 //4
-                { name: "Article 05", nameUrl: "article-01", description: "description 05", content: "content", inActiveReason: "Not Valid", isActive: false, createdBy: data.newUsers[1].id, updatedBy: data.newUsers[1].id },
+                { name: "Article 05", nameUrl: "article-01", description: "description 05", content: "content", inActiveReason: "Not Valid", isActive: true, createdBy: data.newUsers[1].id, updatedBy: data.newUsers[1].id },
                 //5
-                { name: "Article 06", nameUrl: "article-01", description: "description 06", content: "content", inActiveReason: "Not Valid", isActive: false, createdBy: data.newUsers[1].id, updatedBy: data.newUsers[1].id },
+                { name: "Article 06", nameUrl: "article-01", description: "description 06", content: "content", inActiveReason: "Not Valid", isActive: true, createdBy: data.newUsers[1].id, updatedBy: data.newUsers[1].id },
+                //6
+                { name: "Article 07", nameUrl: "article-01", description: "description 06", content: "content", inActiveReason: "Not Valid", isActive: true, createdBy: data.newUsers[1].id, updatedBy: data.newUsers[1].id },
+                //7
+                { name: "Article 08", nameUrl: "article-01", description: "description 06", content: "content", inActiveReason: "Not Valid", isActive: false, createdBy: data.newUsers[1].id, updatedBy: data.newUsers[1].id },
             ];
             //remove all articles in database
             Article.remove({}, function() {

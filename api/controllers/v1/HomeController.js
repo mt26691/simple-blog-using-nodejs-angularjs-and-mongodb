@@ -5,54 +5,32 @@
 
 var homeService = require("../../services/HomeService");
 module.exports = {
-    //Register new user with name, email and password
-    'home': function(req, res) {
-        homeService.home(function(err, subjects) {
+    //get home page data, articles and total number of articles for pagination
+    'search': function(req, res) {
+        var key = req.query.key;
+        var page = req.query.page;
+        homeService.search(key, page, function(err, artciles, total) {
             if (err) {
                 return res.status(500);
             }
 
-            return res.status(200).json({ err: false, subjects: subjects });
+            return res.status(200).json({ err: false, artciles: artciles, total: total });
         });
     },
-    'articleDetails': function(req, res) {
-        var subjectNameUrl = req.params.subjectNameUrl.toLowerCase();
-        var chapterNameUrl = req.params.chapterNameUrl.toLowerCase();
-        var lectureNameUrl = req.params.lectureNameUrl;
-        if (lectureNameUrl != null) {
-            lectureNameUrl = lectureNameUrl.toLowerCase();
-        }
-
-        homeService.articleDetails(subjectNameUrl, chapterNameUrl, lectureNameUrl, function(err, result, msg, data) {
-            if (err) {
-                return res.status(500);
-            }
-
-            if (result == false) {
-                return res.status(200).json({ err: true, msg: msg })
-            }
-            return res.status(200).json(
-                {
-                    err: false,
-                    subject: data.subject,
-                    selectedChapter: data.selectedChapter,
-                    lectures: data.lectures,
-                    selectedLecture: data.selectedLecture,
-                    comments: data.comments
-                });
-        });
-    },
-    'lectureOnId': function(req, res) {
+    //get article details
+    'get': function(req, res) {
+        var nameUrl = req.params.nameUrl;
         var id = req.params.id;
-        if (id == null) {
-            return res.redirect("/");
+        //return 404 if in the request does not contains nameUrl and id
+        if (nameUrl == null || id == null) {
+            return res.status(404);
         }
-        homeService.lectureOnId(id, function callback(err, result, redirectUrl) {
-            if (err || !result) {
-                return res.redirect("/");
+        homeService.get(id, function(err, article) {
+            if (err) {
+                return res.status(500);
             }
 
-            return res.redirect(redirectUrl);
+            return res.status(200).json({ err: false, article: article });
         });
-    },
+    }
 };

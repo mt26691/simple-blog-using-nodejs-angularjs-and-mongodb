@@ -5,6 +5,8 @@ var server = supertest.agent(testConfig.host + ":" + testConfig.port);
 var apiURL = testConfig.homeApi;
 var initData = require('../initData');
 
+// see more at /api/controllers/v1/HomeController.js
+// and /api/routes/homeRoutes.js
 describe('Admin Home Controller Test', function() {
     var newUsers = [];
     var oldUsers = [];
@@ -21,48 +23,68 @@ describe('Admin Home Controller Test', function() {
         });
     });
 
-    it('user go to home page, see all active articles', function(done) {
+    //search in HomeController
+    it('user go to home page and see all active article', function(done) {
         server
             .get(apiURL)
             .expect('Content-type', /json/)
             .expect(200)
             .end(function(err, res) {
                 res.status.should.equal(200); // OK
-                assert.equal(3, res.body.subjects.length);
+                assert.equal(5, res.body.artciles.length);
+                //7 active articles
+                assert.equal(7, res.body.total);
                 done();
             });
 
     });
 
-    //query in api/v1/admin/CommentController.js with param: keyword = Comment, page = 2
+    //search in HomeController
+    it('user go to page 2 and see the articles in page 2', function(done) {
+        server
+            .get(apiURL + "?page=2")
+            .expect('Content-type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                res.status.should.equal(200); // OK
+                assert.equal(2, res.body.artciles.length);
+                assert.equal(7, res.body.total);
+                done();
+            });
+
+    });
+
+    //get in HomeController
     it('user can see active articles details', function(done) {
         server
-            .get(testConfig.homeApi + newSubjects[1].nameUrl + "/" + newChapters[1].nameUrl + "/" + newLectures[0].nameUrl)
+            .get(testConfig.homeApi + newArticles[1].nameUrl + "/" + newArticles[1].id)
             .expect('Content-type', /json/)
             .end(function(err, res) {
+                //compare returned data
+                assert.equal(res.body.article.nameUrl, newArticles[1].nameUrl);
                 assert.equal(false, res.body.err);
                 done();
             });
     });
 
-    //get in api/v1/admin/CommentController.js
-    it('user can not see inactive article details', function(done) {
+    //get in HomeController
+    it('user can not see inactive articles details', function(done) {
         server
-            .get(testConfig.homeApi + newSubjects[1].nameUrl + "/" + newChapters[1].nameUrl + "/" + newLectures[4].nameUrl)
+            .get(testConfig.homeApi + newArticles[1].nameUrl + "/" + newArticles[7].id)
             .expect('Content-type', /json/)
             .end(function(err, res) {
-                assert.equal(true, res.body.err);
+                //compare returned data
+                assert.equal(null, res.body.article);
                 done();
             });
     });
 
     //get in api/v1/admin/CommentController.js
-    it('user can not see lecture with wrong url', function(done) {
+    it.only('user can not see lecture with wrong url', function(done) {
         server
-            .get(testConfig.homeApi + newSubjects[1].nameUrl + "/" + newChapters[1].nameUrl + "/" + "zxc")
+            .get(testConfig.homeApi + newArticles[1].nameUrl + "/")
             .expect('Content-type', /json/)
             .end(function(err, res) {
-                assert.equal(true, res.body.err);
                 done();
             });
     });

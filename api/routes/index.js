@@ -16,7 +16,6 @@ router.get('/admin', [checkIn, isAdmin, function (req, res, next) {
 router.get('/admin/*', [checkIn, isAdmin, function (req, res, next) {
     res.render('layout_admin.html');
 }]);
-router.get('/lecture/:id', homeController.lectureOnId);
 router.get('/log-out', authController.logout);
 /* GET home page. */
 router.get('/*', function (req, res, next) {

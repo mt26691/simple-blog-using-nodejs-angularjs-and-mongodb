@@ -15,7 +15,7 @@ var auth = require('./api/routes/authRoutes');
 var accountRoute = require('./api/routes/accountRoutes');
 var adminUser = require("./api/routes/userRoutes");
 var adminArticle = require("./api/routes/articleRoutes");
-// var homeApi = require("./api/routes/homeRoutes");
+var homeApi = require("./api/routes/homeRoutes");
 var uploadImageRoutes = require("./api/routes/uploadImageRoutes");
 
 var app = express();
@@ -41,7 +41,7 @@ app.use('/api/v1/account', accountRoute);
 app.use('/api/v1/admin/user', adminUser);
 app.use('/api/v1/admin/article', adminArticle);
 app.use('/api/v1/admin/uploadImage', uploadImageRoutes);
-// app.use('/api/v1/home', homeApi);
+app.use('/api/v1/home', homeApi);
 
 app.use('/', routes);
 // catch 404 and forward to error handler
