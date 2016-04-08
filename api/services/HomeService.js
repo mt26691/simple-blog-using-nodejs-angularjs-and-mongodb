@@ -13,13 +13,9 @@ module.exports = {
 
     'home': function (callback) {
         Article
-        //find only active subjects
+        //find only active articleB
             .find({ isActive: true })
             .select({
-                chapters: 0,
-                createdAt: 0,
-                updatedAt: 0,
-                updatedBy: 0,
                 __v: 0,
                 isActive: 0,
                 inActiveReason: 0,
