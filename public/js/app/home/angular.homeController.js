@@ -14,13 +14,22 @@ SimpleBlogApp.controller('masterHomeController', ['$scope', '$rootScope', '$http
     }]);
 
 //CONTROLLER
-SimpleBlogApp.controller('homeController', ['$scope', '$rootScope', 'HomeApi',
-    function($scope, $rootScope, HomeApi) {
-        $scope.currentUser = $rootScope.currentUser;
-        $scope.isAuthenticated = $rootScope.isAuthenticated;
-        $scope.userRoles = $rootScope.userRoles;
-        
-        HomeApi.get({}, function callback(res) {
-            $scope.subjects = res.subjects;
+SimpleBlogApp.controller('homeController', ['$scope', 'HomeApi', '$routeParams', '$location',
+    function($scope, HomeApi, $routeParams, $location) {
+        $scope.totalItems = 0;
+        $scope.paging = { currentPage: 1 };
+        if ($routeParams.page != null && !isNaN($routeParams.page)) {
+            $scope.paging.currentPage = parseInt($routeParams.page);
+        }
+        $scope.totalItems = 0;
+
+        HomeApi.get({ page: $scope.paging.currentPage }, function callback(res) {
+            $scope.articles = res.articles;
+            $scope.totalItems = res.total;
         });
+
+        $scope.pageChanged = function() {
+            //change page
+            $location.path('/page-' + $scope.paging.currentPage);
+        };
     }]);

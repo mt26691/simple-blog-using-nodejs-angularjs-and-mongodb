@@ -9,12 +9,12 @@ module.exports = {
     'search': function(req, res) {
         var key = req.query.key;
         var page = req.query.page;
-        homeService.search(key, page, function(err, artciles, total) {
+        homeService.search(key, page, function(err, articles, total) {
             if (err) {
                 return res.status(500);
             }
 
-            return res.status(200).json({ err: false, artciles: artciles, total: total });
+            return res.status(200).json({ err: false, articles: articles, total: total });
         });
     },
     //get article details

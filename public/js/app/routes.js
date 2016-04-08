@@ -7,10 +7,16 @@ SimpleBlogApp.config(['$routeProvider', '$locationProvider', function($routeProv
             templateUrl: '/templates/home.html',
             controller: 'homeController'
         },
+        '/page-:page':
+        {
+            title: "Simple blog using nodejs angularjs mongodb",
+            templateUrl: '/templates/home.html',
+            controller: 'homeController'
+        },
         '/admin/dashboard':
         {
             // templateUrl: '/templates/admin/user/users.html',
-            templates:"<div></div>",
+            templates: "<div></div>",
             controller: 'userController',
             role: 'admin'
         },
