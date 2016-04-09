@@ -31,7 +31,7 @@ describe('Admin Home Controller Test', function() {
             .expect(200)
             .end(function(err, res) {
                 res.status.should.equal(200); // OK
-                assert.equal(5, res.body.artciles.length);
+                assert.equal(5, res.body.articles.length);
                 //7 active articles
                 assert.equal(7, res.body.total);
                 done();
@@ -47,7 +47,7 @@ describe('Admin Home Controller Test', function() {
             .expect(200)
             .end(function(err, res) {
                 res.status.should.equal(200); // OK
-                assert.equal(2, res.body.artciles.length);
+                assert.equal(2, res.body.articles.length);
                 assert.equal(7, res.body.total);
                 done();
             });
@@ -80,7 +80,7 @@ describe('Admin Home Controller Test', function() {
     });
 
     //get in api/v1/admin/CommentController.js
-    it.only('user can not see lecture with wrong url', function(done) {
+    it('user can not see lecture with wrong url', function(done) {
         server
             .get(testConfig.homeApi + newArticles[1].nameUrl + "/")
             .expect('Content-type', /json/)

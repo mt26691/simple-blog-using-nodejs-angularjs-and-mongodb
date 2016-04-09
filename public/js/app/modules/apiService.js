@@ -25,27 +25,10 @@ apiServices.factory("Chapter", ["$resource", function($resource) {
     });
 }]);
 
-apiServices.factory("Lecture", ["$resource", function($resource) {
-    return $resource("/api/v1/admin/lecture/:id", {}, {
-        "getCurrentOrder": {
-            url: "/api/v1/admin/lecture/getCurrentOrder/:chapter",
-            method: "GET"
-        }
-    });
-}]);
-
 apiServices.factory("Comment", ["$resource", function($resource) {
     return $resource("/api/v1/admin/comment/:id", {}, {});
 }]);
 
-apiServices.factory("Level", ["$resource", function($resource) {
-    return $resource("/api/v1/admin/level/:id", {}, {
-        "source": {
-            url: "/api/v1/admin/level/source/",
-            method: "GET"
-        }
-    });
-}]);
 
 apiServices.factory("MailHandler", ["$resource", function($resource) {
     return $resource("/api/v1/admin/sendEmail/", {}, {});
@@ -126,12 +109,8 @@ apiServices.factory("HomeApi", ["$resource", function($resource) {
             url: "/api/v1/home/search",
             method: "GET"
         },
-        "getSubjectDetails": {
-            url: "/api/v1/home/:subject",
-            method: "GET"
-        },
-        "getLectureDetails": {
-            url: "/api/v1/home/:subject/:chapter/:lecture",
+        "getArtcileDetails": {
+            url: "/api/v1/home/:nameUrl/:id/",
             method: "GET"
         },
     });

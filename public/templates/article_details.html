@@ -1,0 +1,23 @@
+<div class="row" ng-if="err == false">
+    <!--Blog Roll Content-->
+    <div class="col-md-9 col-md-push-3" id="MainContainer">
+        <div class="row">
+
+            <div class="col-lg-12">
+                <h2 class="title media-heading">{{article.name}}</h2>
+                <ul class="list-inline">
+                    <li><i class="fa fa-calendar"></i> {{article.createdAt | date:"dd/MM/yyyy"}}</li>
+                    <li><i class="fa fa-user"></i> <a href="/user/{{article.createdBy.id}}">{{article.createdBy.name}}</a></li>
+                </ul>
+                <!--Main content of post-->
+                <div class="blog-content" ng-bind-html="article.content">
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="row text-center" ng-if="err">
+        <h1>{{msg}}</h1>
+    </div>

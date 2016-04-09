@@ -29,7 +29,7 @@ module.exports = {
             if (err) {
                 return res.status(500);
             }
-
+            console.log("dm may");
             return res.status(200).json({ err: false, article: article });
         });
     }

@@ -82,23 +82,18 @@ SimpleBlogApp.config(['$routeProvider', '$locationProvider', function($routeProv
             title: 'About us',
             templateUrl: '/templates/infor/about-us.html',
         },
-        '/:subjectNameUrl/':
+        '/:nameUrl/:id':
         {
-            templateUrl: '/templates/subject_details.html',
-            controller: 'subjectDetailsController'
-        },
-        '/:subjectNameUrl/:chapterNameUrl/:lectureNameUrl?':
-        {
-            templateUrl: '/templates/lecture_details.html',
-            controller: 'lectureDetailsController'
-        },
+            templateUrl: '/templates/article_details.html',
+            controller: 'articleDetailsController'
+        }
     };
 
     for (var path in window.routes) {
         $routeProvider.when(path, window.routes[path]);
     }
 
-    $routeProvider.otherwise({ redirectTo: '/dang-nhap' });
+    $routeProvider.otherwise({ redirectTo: '/log-in' });
     $locationProvider.html5Mode(true);
 
 }]);

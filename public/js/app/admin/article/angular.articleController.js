@@ -1,6 +1,6 @@
 
 SimpleBlogApp.controller('articleController', ['$scope', '$http', 'config', 'Article', 'toastr',
-    function ($scope, $http, config, Article, toastr, Level) {
+    function ($scope, $http, config, Article, toastr) {
         //not display new edit form
         $scope.isDisplayForm = false;
         $scope.search = { keyword: "", isActive: "" };
