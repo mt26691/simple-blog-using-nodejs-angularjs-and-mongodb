@@ -82,6 +82,11 @@ SimpleBlogApp.config(['$routeProvider', '$locationProvider', function($routeProv
             title: 'About us',
             templateUrl: '/templates/infor/about-us.html',
         },
+        '/policies':
+        {
+            title: 'About us',
+            templateUrl: '/templates/infor/policies.html',
+        },
         '/:nameUrl/:id':
         {
             templateUrl: '/templates/article_details.html',
