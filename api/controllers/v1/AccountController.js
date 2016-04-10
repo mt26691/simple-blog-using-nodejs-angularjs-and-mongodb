@@ -15,24 +15,15 @@ module.exports = {
     //Register new user with name, email and password
     'register': function(req, res) {
         var registerData = { email: req.body.email, name: req.body.name, password: req.body.password };
-
-        User.findOne({ email: registerData.email }, function(err, foundUser) {
+        //register new user
+        accountService.register(registerData, function(err, result, msg, newUser) {
             if (err) {
-                return res.status(200).json({ err: true, msg: "Server encountered an unexpected error" });
+                return res.status(200).json({ err: true, msg: "server error" });
             }
-            if (foundUser) {
-                return res.status(200).json({ err: true, msg: "Duplicate email" });
+            if (!result) {
+                return res.status(200).json({ err: true, msg: msg });
             }
-            else {
-                //register new user goes here
-                accountService.register(registerData, function(err, newUser) {
-                    if (err) {
-                        return res.status(200).json({ err: true, msg: "server error" });
-                    }
-                    return res.status(200).json({ email: newUser.email });
-                });
-            }
-
+            return res.status(200).json({ email: newUser.email, isSuccess: true });
         });
     },
 

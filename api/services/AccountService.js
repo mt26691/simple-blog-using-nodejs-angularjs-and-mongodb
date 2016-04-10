@@ -13,21 +13,30 @@ var crypto = require('crypto');
 var AccessToken = model.AccessToken;
 var Subject = model.Subject;
 module.exports = {
-    
+
     //register new account base on name, username and password
-    'register': function (registerData, callback) {
-        //create new user base on username, password, email address
-        User.create(registerData, function (err, user) {
+    'register': function(registerData, callback) {
+        //check duplicate email
+        User.findOne({ email: registerData.email }, function(err, foundUser) {
+
             if (err) {
                 return callback(err);
             }
-          
-            callback(null, user);
+            if (foundUser) {
+                return callback(err, false, "Duplicate email");
+            }
+            //create new user base on username, password, email address
+            User.create(registerData, function(err, user) {
+                if (err) {
+                    return callback(err);
+                }
+                callback(null, true, "User registerd", user);
+            })
         });
     },
     //change password, input data is current user id and password
-    changePassword: function (changePasswordData, callback) {
-        User.findOne({ _id: changePasswordData.id }, function (err, foundUser) {
+    changePassword: function(changePasswordData, callback) {
+        User.findOne({ _id: changePasswordData.id }, function(err, foundUser) {
             if (err) {
                 return callback(err);
             }
@@ -35,7 +44,7 @@ module.exports = {
                 return callback(null, false, "Không tìm thấy tài khoản");
             }
 
-            if (foundUser.comparePassword(changePasswordData.currentPassword, function (err, result) {
+            if (foundUser.comparePassword(changePasswordData.currentPassword, function(err, result) {
                 if (err) {
                     return callback(err);
                 }
@@ -45,13 +54,13 @@ module.exports = {
                 foundUser.password = changePasswordData.password;
                 foundUser.save();
                 //remove all access token belong to user
-                AccessToken.remove({ user: foundUser.id }, function (err, result) {
+                AccessToken.remove({ user: foundUser.id }, function(err, result) {
                     //add new access token
                     var accessToken = {
                         key: crypto.randomBytes(48).toString('base64'),
                         user: foundUser.id,
                     }
-                    AccessToken.create(accessToken, function (err) {
+                    AccessToken.create(accessToken, function(err) {
                         if (err) {
                             return callback(err);
                         }
@@ -62,9 +71,9 @@ module.exports = {
             }));
         });
     },
-    resetPassword: function (changePasswordData, callback) {
+    resetPassword: function(changePasswordData, callback) {
 
-        User.findOne({ "passwordResetToken.value": changePasswordData.passwordResetToken }, function (err, foundUser) {
+        User.findOne({ "passwordResetToken.value": changePasswordData.passwordResetToken }, function(err, foundUser) {
             if (err) {
                 return callback(err);
             }
@@ -81,7 +90,7 @@ module.exports = {
             }
             foundUser.password = changePasswordData.password;
             foundUser.passwordResetToken = null;
-            foundUser.save(function (err, savedUser) {
+            foundUser.save(function(err, savedUser) {
                 if (err) return callback(err);
                 //remove all access token belong to a user
                 AccessToken.remove({ user: foundUser.id });
@@ -90,11 +99,11 @@ module.exports = {
 
         });
     },
-    getProfile: function (userId, callBack) {
+    getProfile: function(userId, callBack) {
         User
             .findOne({ _id: userId })
             .select({ name: 1, email: 1 })
-            .exec(function (err, foundUser) {
+            .exec(function(err, foundUser) {
                 if (err) {
                     return callBack(err);
                 }
@@ -104,7 +113,7 @@ module.exports = {
                 Subject
                     .find({ createdBy: userId })
                     .select({ name: 1, nameUrl: 1 })
-                    .exec(function (err, subjects) {
+                    .exec(function(err, subjects) {
                         return callBack(null, foundUser, subjects);
                     });
             });

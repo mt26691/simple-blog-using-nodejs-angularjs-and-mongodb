@@ -2,7 +2,7 @@
 var SimpleBlogApp = angular.module('SimpleBlogApp', ['ngRoute', 'ngResource', 'ngMessages',
     'ui.bootstrap', 'ngCookies',
     'api-services', 'toastr', 'angular-confirm', 'monospaced.elastic',
-    'ckeditor', 'ngSanitize', 'angulartics', 'angulartics.google.analytics', 'flow'])
+    'ckeditor', 'ngSanitize', 'flow'])
     .config([
         'toastrConfig', '$httpProvider',
         function(toastrConfig, $httpProvider) {
@@ -23,7 +23,7 @@ var SimpleBlogApp = angular.module('SimpleBlogApp', ['ngRoute', 'ngResource', 'n
 SimpleBlogApp.run(['$rootScope', function($rootScope) {
     $rootScope.page = {
         setTitle: function(title) {
-            this.title = title ;
+            this.title = title;
         }
     }
 
@@ -60,6 +60,6 @@ SimpleBlogApp.constant('config', {
     apiAccountUrl: '/api/v1/account',
     apiUserUrl: '/api/v1/admin/user',
     //upload image /api/v1/admin/uploadImage
-    apiUploadArticleImage :'/api/v1/admin/uploadImage/uploadArticleImage',
-    apiUploadImage :'/api/v1/admin/uploadImage/uploadImage',
+    apiUploadArticleImage: '/api/v1/admin/uploadImage/uploadArticleImage',
+    apiUploadImage: '/api/v1/admin/uploadImage/uploadImage',
 });
