@@ -1,6 +1,6 @@
 
 //get-new-password.html
-SimpleBlogApp.controller('getNewPasswordController', ['$scope', 'Account', '$routeParams',
+SimpleBlogApp.controller('resetPasswordController', ['$scope', 'Account', '$routeParams',
     function($scope, Account, $routeParams) {
         //store init form base data
         $scope.forgotPasswordForm = { password: "", repeatPassword: "" };
@@ -20,6 +20,7 @@ SimpleBlogApp.controller('getNewPasswordController', ['$scope', 'Account', '$rou
         }
         
         Account.getResetPasswordData({ passwordResetToken: $routeParams.passwordResetToken }, function callback(data) {
+            debugger;
             if (data.err) {
                 $scope.notFoundUser = true;
             }

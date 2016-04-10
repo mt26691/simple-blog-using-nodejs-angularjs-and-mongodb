@@ -6,21 +6,21 @@ var nodemailer = require("nodemailer");
 
 
 var smtpConfig = {
-    host: 'smtp.zoho.com',
+    host: 'smtp.gmail.com',
     port: 465,
     secure: true, // use SSL
     auth: {
-        user: 'test@gmail.com',
-        pass: 'abcas'
+        user: '266127@gmail.com',
+        pass: '38133813'
     }
 }
 
 module.exports = nodemailer.createTransport(smtpConfig, {
     // default values for sendMail method
-    from: 'hocdai.com',
+    from: 'My Blog',
     headers: {
-        'hocdai.com reset password': 'this email is from hocdai.com'
+        'My blog by hocdai.com': 'this email is from nodemailer'
     }
 });
 
-     
+

@@ -83,7 +83,7 @@ userSchema.methods.sendPasswordResetEmail = function (callback) {
                 name: self.name,
                 email: self.email
             },
-            subject: "Khôi phục mật khẩu hocdai.com",
+            subject: "Reset password",
             data: {
                 name: self.name,
                 email: self.email,

@@ -51,9 +51,9 @@ SimpleBlogApp.config(['$routeProvider', '$locationProvider', function($routeProv
             templateUrl: '/templates/authenticate/login.html',
             controller: 'loginController',
         },
-        '/quen-mat-khau':
+        '/forgot-password':
         {
-            title: 'Quên mật khẩu',
+            title: 'Forgot password',
             templateUrl: '/templates/account/forgot-password.html',
             controller: 'forgotPasswordController',
         },
@@ -71,11 +71,11 @@ SimpleBlogApp.config(['$routeProvider', '$locationProvider', function($routeProv
             controller: 'changeProfileController',
             //notAllowLoggedInUser:true
         },
-        '/lay-lai-mat-khau/:passwordResetToken?':
+        '/reset-password/:passwordResetToken?':
         {
-            title: 'Lấy lại mật khẩu',
-            templateUrl: '/templates/account/get-new-password.html',
-            controller: 'getNewPasswordController'
+            title: 'Reset password',
+            templateUrl: '/templates/account/reset-password.html',
+            controller: 'resetPasswordController'
         },
         '/about-us':
         {

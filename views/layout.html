@@ -55,7 +55,7 @@
                         <li ng-if="userRoles == 'admin' || userRoles == 'editor'"><a href="/admin/home" target="_self"><i class="fa fa-pencil fa-fw"></i> Admin</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="/dang-xuat" target="_self"><i class="fa fa-sign-out fa-fw"></i> Sign out</a>
+                        <li><a href="/log-out" target="_self"><i class="fa fa-sign-out fa-fw"></i> Sign out</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -131,13 +131,12 @@
     <script src="/js/app/authenticate/authsession.js"></script>
     <script src="/js/app/authenticate/loginController.js"></script>
     <script src="/js/custom.js"></script>
+    <script src="/js/app/account/angular.changePasswordController.js"></script>
+    <script src="/js/app/account/angular.changeProfileController.js"></script>
+    <script src="/js/app/account/angular.forgotPasswordController.js"></script>
     <script src="/js/app/account/angular.getUserProfileController.js"></script>
-    <script src="/js/app/account/changePasswordController.js"></script>
-    <script src="/js/app/account/changeProfileController.js"></script>
-    <script src="/js/app/account/forgotPasswordController.js"></script>
-    <script src="/js/app/account/getNewPasswordController.js"></script>
-    <script src="/js/app/account/registerController.js"></script>
-    <script src="/js/app/account/verifyAccountController.js"></script>
+    <script src="/js/app/account/angular.registerController.js"></script>
+    <script src="/js/app/account/angular.resetPasswordController.js"></script>
     <script src="/js/app/directives/enterSubmitDirective.js"></script>
     <script src="/js/app/directives/isActiveNav.js"></script>
     <script src="/js/app/directives/lectureContentDirective.js"></script>

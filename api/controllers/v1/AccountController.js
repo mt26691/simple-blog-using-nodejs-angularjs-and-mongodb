@@ -99,14 +99,14 @@ module.exports = {
     sendPasswordResetEmail: function(req, res) {
         var email = req.body.email;
         if (!email) {
-            return res.status(200).json({ err: true, msg: "Không tìm thấy email." });
+            return res.status(200).json({ err: true, msg: "Email not found." });
         }
 
         User.findOne({ email: email }, function(err, user) {
             if (err) return res.serverError(err);
 
             if (!user) {
-                return res.json({ err: true, msg: "Không tìm thấy email" });
+                return res.json({ err: true, msg: "Email not found" });
             }
 
             //for testing purpose
