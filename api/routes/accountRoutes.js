@@ -5,7 +5,6 @@ var checkIn = require("../policies/checkin");
 var isAuthenticated = require("../policies/isAuthenticated");
 
 
-
 router.post('/register', accountController.register);
 
 router.post('/getProfile', accountController.getProfile);

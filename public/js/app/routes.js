@@ -57,9 +57,9 @@ SimpleBlogApp.config(['$routeProvider', '$locationProvider', function($routeProv
             templateUrl: '/templates/account/forgot-password.html',
             controller: 'forgotPasswordController',
         },
-        '/doi-mat-khau':
+        '/change-password':
         {
-            title: 'Đổi mật khẩu',
+            title: 'Change password',
             templateUrl: '/templates/account/change-password.html',
             controller: 'changePasswordController',
             //notAllowLoggedInUser:true

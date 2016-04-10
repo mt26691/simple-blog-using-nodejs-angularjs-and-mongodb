@@ -41,15 +41,16 @@ module.exports = {
                 return callback(err);
             }
             if (!foundUser) {
-                return callback(null, false, "Không tìm thấy tài khoản");
+                return callback(null, false, "User not found");
             }
-
+            console.log("XXXXXX");
+            console.log(changePasswordData.currentPassword);
             if (foundUser.comparePassword(changePasswordData.currentPassword, function(err, result) {
                 if (err) {
                     return callback(err);
                 }
                 if (!result) {
-                    return callback(null, false, "Mật khẩu hiện tại không đúng.");
+                    return callback(null, false, "The current password is wrong.");
                 }
                 foundUser.password = changePasswordData.password;
                 foundUser.save();

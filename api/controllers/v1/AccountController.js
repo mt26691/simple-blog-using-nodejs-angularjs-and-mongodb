@@ -135,14 +135,14 @@ module.exports = {
             if (err) return res.status(500);
             //if user can not be found
             if (!user) {
-                return res.json({ err: true, msg: "Đường link không đúng." });
+                return res.json({ err: true, msg: "Link is wrong." });
             }
             //if token is invalid
             var expires = new Date().setHours(new Date().getHours() - 48);
             var isssueAt = new Date(user.passwordResetToken.issuedAt);
 
             if (isssueAt.getTime() <= expires) {
-                return res.status(200).json({ err: true, msg: "Đường link hết hiệu lực." });
+                return res.status(200).json({ err: true, msg: "Link is expired." });
             }
 
             return res.status(200).json({ name: user.name, email: user.email });
@@ -158,11 +158,11 @@ module.exports = {
 
         var resetPasswordData = { password: req.body.password, passwordResetToken: req.body.passwordResetToken };
         if (!resetPasswordData.passwordResetToken || !resetPasswordData.password) {
-            return res.status(200).json({ err: true, msg: "Sai tham số" });
+            return res.status(200).json({ err: true, msg: "Unexpected token" });
         }
         accountService.resetPassword(resetPasswordData, function(err, savedUser) {
             if (err) {
-                return res.status(200).json({ err: true, msg: "Có lỗi không mong muốn xảy ra." });
+                return res.status(200).json({ err: true, msg: "Server error." });
             }
             //reset password and let user login
             else {
