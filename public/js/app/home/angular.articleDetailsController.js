@@ -11,8 +11,9 @@ SimpleBlogApp.controller('articleDetailsController', ['$scope', '$routeParams', 
                 }
                 else {
                     $scope.article = res.article;
+                    $scope.recentArticles = res.recentArticles;
                     $scope.page.setTitle($scope.article.name);
                 }
             });
-            
+
     }]);

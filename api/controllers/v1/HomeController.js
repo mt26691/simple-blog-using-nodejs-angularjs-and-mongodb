@@ -29,8 +29,14 @@ module.exports = {
             if (err) {
                 return res.status(500);
             }
-            console.log("dm may");
-            return res.status(200).json({ err: false, article: article });
+            //get recent articles
+            homeService.getRecentArticle(id, function callback(err, articles) {
+                if (err) {
+                    return res.status(500);
+                }
+                return res.status(200).json({ err: false, article: article, recentArticles: articles });
+            });
+
         });
     }
 };
