@@ -57,6 +57,7 @@ module.exports = {
     get: function name(id, callback) {
         Article
             .findOne({ _id: id, isActive: true })
+            .populate('createdBy', 'name')
             .exec(function(err, article) {
 
                 if (err) {

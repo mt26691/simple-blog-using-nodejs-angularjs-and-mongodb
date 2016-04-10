@@ -6,11 +6,11 @@
 
             <div class="row">
                 <div class="group1 col-sm-6 col-md-6">
-                    <span class="fa fa-user"></span> <a href="#">{{article.createdBy.name}} abc</a>
+                    <span class="fa fa-user"></span> <a href="/user/{{article.createBy.id}}">{{article.createdBy.name}}</a>
                 </div>
                 <div class="group2 col-sm-6 col-md-6">
                     <span class="glyphicon glyphicon-pencil"></span> <a href="singlepost.html#comments">20 Comments</a>
-                    <span class="fa fa-calendar"></span> August 24, 2013 9:00 PM
+                    <span class="fa fa-calendar"></span> {{article.createdAt | date:"MMMM dd, yyyy hh:mm:ss a"}}
                 </div>
             </div>
 
@@ -30,7 +30,7 @@
             </p>
             <button class="btn btn-primary btn-lg">Subscribe to my feed</button>
         </div>
-        <div class="panel panel-default">
+        <div class="panel panel-default" ng-if="recentArticles.length >0">
             <div class="panel-heading">
                 <h4>Latest Posts</h4>
             </div>

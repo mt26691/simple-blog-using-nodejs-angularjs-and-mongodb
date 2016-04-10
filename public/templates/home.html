@@ -6,7 +6,7 @@
     </div>
     <div class="col-xs-8">
         <h3><a href="/{{article.nameUrl}}/{{article.id}}/">{{article.name}}</a></h2>
-        <p><i class="fa fa-calendar"></i> <span>{{article.createdAt | date:"dd/MM/yyyy"}}</span> <i class="fa fa-user fa-fw"></i>  <a class="author" href="/tai-khoan/{{lecture.createdBy.id}}">{{lecture.createdBy.name}}</a></p>
+        <p><i class="fa fa-calendar"></i> <span>{{article.createdAt | date:"dd/MM/yyyy"}}</span> <i class="fa fa-user fa-fw"></i>  <a class="author" href="/tai-khoan/{{article.createdBy.id}}">{{article.createdBy.name}}</a></p>
     </div>
 </div>
 <div class="text-center" ng-if="totalItems > 5">
