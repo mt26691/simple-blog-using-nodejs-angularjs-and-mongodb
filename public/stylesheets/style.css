@@ -502,3 +502,12 @@ select.single-line {
     max-width: 100% !important;
     height: auto;
 }
+
+#comments, #comments li {
+    margin: 0;
+    padding: 0;
+}
+ 
+#comments li {
+    list-style: none;
+}

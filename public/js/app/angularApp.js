@@ -1,7 +1,7 @@
 //MODULE
 var SimpleBlogApp = angular.module('SimpleBlogApp', ['ngRoute', 'ngResource', 'ngMessages',
     'ui.bootstrap', 'ngCookies',
-    'api-services', 'toastr', 'angular-confirm', 'monospaced.elastic',
+    'api-services', 'toastr', 'angular-confirm',
     'ckeditor', 'ngSanitize', 'flow'])
     .config([
         'toastrConfig', '$httpProvider',
