@@ -11,10 +11,14 @@ module.exports = function() {
     var AccessToken =
         mongoose.model('AccessToken', require('./accessToken'), 'AccessToken');
 
+    var Comment =
+        mongoose.model('Comment', require('./comment'), 'Comment');
+
     var models = {
         User: User,
         AccessToken: AccessToken,
-        Article: Article
+        Article: Article,
+        Comment: Comment
     };
 
     return models;

@@ -17,6 +17,7 @@ var adminUser = require("./api/routes/userRoutes");
 var adminArticle = require("./api/routes/articleRoutes");
 var homeApi = require("./api/routes/homeRoutes");
 var uploadImageRoutes = require("./api/routes/uploadImageRoutes");
+var adminComment = require("./api/routes/commentRoutes");
 
 var app = express();
 var async = require('async');
@@ -40,6 +41,8 @@ app.use('/api/v1/account', accountRoute);
 // //admin section
 app.use('/api/v1/admin/user', adminUser);
 app.use('/api/v1/admin/article', adminArticle);
+app.use('/api/v1/admin/comment', adminComment);
+
 app.use('/api/v1/admin/uploadImage', uploadImageRoutes);
 app.use('/api/v1/home', homeApi);
 

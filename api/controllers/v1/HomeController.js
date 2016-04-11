@@ -25,17 +25,22 @@ module.exports = {
         if (nameUrl == null || id == null) {
             return res.status(404);
         }
-        homeService.get(id, function(err, article) {
+        homeService.get(id, function(err, article, comments) {
             if (err) {
                 return res.status(500);
             }
-            //get recent articles
-            homeService.getRecentArticle(id, function callback(err, articles) {
-                if (err) {
-                    return res.status(500);
-                }
-                return res.status(200).json({ err: false, article: article, recentArticles: articles });
-            });
+            if (article != null) {
+                //get recent articles
+                homeService.getRecentArticle(id, function callback(err, articles) {
+                    if (err) {
+                        return res.status(500);
+                    }
+                    return res.status(200).json({ err: false, article: article, recentArticles: articles, comments: comments });
+                });
+            }
+            else {
+                return res.status(200).json({ err: false, article: null, recentArticles: null });
+            }
 
         });
     }

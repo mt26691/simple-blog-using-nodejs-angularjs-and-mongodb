@@ -32,6 +32,12 @@ SimpleBlogApp.config(['$routeProvider', '$locationProvider', function($routeProv
             controller: 'articleController',
             role: 'admin'
         },
+        '/admin/comment':
+        {
+            templateUrl: '/templates/admin/comment/comment.html',
+            controller: 'commentController',
+            role: 'admin'
+        },
         '/tai-khoan/:userId?':
         {
             title: 'Tài khoản',

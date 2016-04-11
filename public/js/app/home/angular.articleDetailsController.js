@@ -1,11 +1,11 @@
-SimpleBlogApp.controller('articleDetailsController', ['$scope', '$routeParams', 'HomeApi', 'authenticateService',
-    function($scope, $routeParams, HomeApi, authenticateService) {
+SimpleBlogApp.controller('articleDetailsController', ['$scope', '$routeParams', 'HomeApi', 'authenticateService', 'Comment',
+    function($scope, $routeParams, HomeApi, authenticateService, Comment) {
         var nameUrl = $routeParams.nameUrl;
         var id = $routeParams.id;
         $scope.err = false;
         $scope.isAuthenticated = authenticateService.isAuthenticated();
 
-        $scope.comment = "";
+        $scope.comment = { content: "", article: null };
         HomeApi.getArtcileDetails({ nameUrl: nameUrl, id: id },
             function callback(res) {
                 if (res.err) {
@@ -14,14 +14,16 @@ SimpleBlogApp.controller('articleDetailsController', ['$scope', '$routeParams', 
                 }
                 else {
                     $scope.article = res.article;
+                    $scope.comment.article = $scope.article.id;
                     $scope.recentArticles = res.recentArticles;
                     $scope.page.setTitle($scope.article.name);
+                    $scope.comments = res.comments;
                 }
             });
         $scope.submitComment = function submitComment() {
-            if ($scope.comment != '') {
+            if ($scope.comment.content != '') {
                 //submit comment for approve
-                Comment.save({ comment: $scope.comment }, function callback(data) {
+                Comment.save($scope.comment, function callback(data) {
                     if (data.err == false) {
                         $scope.comment = '';
                         $scope.msg = '';

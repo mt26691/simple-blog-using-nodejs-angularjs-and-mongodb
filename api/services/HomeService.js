@@ -7,6 +7,7 @@
 
 var model = require('../models/models')();
 var Article = model.Article;
+var Comment = model.Comment;
 var config = require("../config/WebConfig");
 var User = model.User;
 module.exports = {
@@ -58,13 +59,22 @@ module.exports = {
         Article
             .findOne({ _id: id, isActive: true })
             .populate('createdBy', 'name')
-            .exec(function(err, article) {
-
+            .exec(function(err, foundArticle) {
                 if (err) {
                     return callback(err);
                 }
                 else {
-                    return callback(null, article)
+                    if (foundArticle) {
+                        Comment.find({ article: foundArticle.id, isActive: true })
+                            .select({ _v: 0, updatedAt: 0, updatedBy: 0 })
+                            .populate("createdBy", "name")
+                            .exec(function(err, comments) {
+                                return callback(null, foundArticle, comments);
+                            });
+                    }
+                    else {
+                        return callback(null, null, null);
+                    }
                 }
 
             });

@@ -1,6 +1,8 @@
 //message service
 module.exports = {
-	"itemsPerPage":5,
-    "url":"http://localhost:3000",
-	"resetPasswordUrl":"/reset-password/"
+    "itemsPerPage": 5,
+    "url": "http://localhost:3000",
+    "resetPasswordUrl": "/reset-password/",
+    "defaultEmail": "nguyenmanhtung848@gmail.com",
+    "defaultName": "Nguyen Manh Tung"
 };

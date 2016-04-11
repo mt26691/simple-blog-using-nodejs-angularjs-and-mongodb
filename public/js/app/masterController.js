@@ -36,6 +36,13 @@ SimpleBlogApp.controller('masterController', ['$scope', '$location', '$rootScope
                 iconClass: 'fa fa-book fa-fw',
                 accessRight: 8
             },
+            {
+                name: 'Comment',
+                url: '/admin/comment',
+                title: 'Comment.',
+                iconClass: 'fa fa-comment-o fa-fw',
+                accessRight: 8
+            },
         ];
 
         $scope.navClass = function(page) {

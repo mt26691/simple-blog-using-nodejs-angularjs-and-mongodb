@@ -19,15 +19,15 @@
             <div class="blog-content" ng-bind-html="article.content">
             </div>
         </article>
-
+        <hr/>
         <ul id="comments" class="comments">
-            <li class="comment">
+            <li class="comment" ng-repeat="currentComment in comments">
                 <div class="clearfix">
-                    <h4 class="pull-left">John</h4>
-                    <p class="pull-right">9:41 PM on August 24, 2013</p>
+                    <h4 class="pull-left">{{currentComment.createdBy.name}}</h4>
+                    <p class="pull-right">{{currentComment.createdAt | date:"MMMM dd, yyyy hh:mm:ss a"}}</p>
                 </div>
                 <p>
-                    <em>I don't believe in astrology but still your writing style is really great!</em>
+                    <em>{{currentComment.content}}</em>
                 </p>
             </li>
         </ul>
@@ -39,7 +39,7 @@
 
                 <div class="col-md-12 form-group">
                     <label class="sr-only" for="email">Comment</label>
-                    <textarea class="form-control" name="comment" placeholder="Comment" required></textarea>
+                    <textarea class="form-control" name="comment" ng-model="comment.content" placeholder="Comment" required></textarea>
                     <div  ng-if="form.$submitted && comment==''" class="error-message">
                         Comment is required.
                     </div>
