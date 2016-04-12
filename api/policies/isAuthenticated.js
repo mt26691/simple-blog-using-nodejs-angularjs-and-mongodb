@@ -10,7 +10,6 @@ module.exports = function(req, res, next) {
         next();
     } else {
         res.clearCookie('AuthSession');
-        res.clearCookie('AuthUser');
         return res.redirect('/log-in');
     }
 

@@ -19,4 +19,6 @@ router.post('/changePassword', [checkIn, isAuthenticated, accountController.chan
 
 router.post('/changeProfile', [checkIn, isAuthenticated, accountController.changeProfile]);
 
+router.get('/me', [checkIn, accountController.me]);
+
 module.exports = router;

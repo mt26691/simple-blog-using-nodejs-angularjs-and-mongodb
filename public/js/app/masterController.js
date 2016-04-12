@@ -1,6 +1,6 @@
 //CONTROLLER
-SimpleBlogApp.controller('masterController', ['$scope', '$location', '$rootScope', '$route', '$routeParams', '$window',
-    function($scope, $location, $rootScope, $route, $routeParams, $window) {
+SimpleBlogApp.controller('masterController', ['$scope', '$location', '$rootScope', '$route',
+    function($scope, $location, $rootScope, $route) {
 
         // Define user empty data :/
         $scope.user = {};
@@ -51,7 +51,5 @@ SimpleBlogApp.controller('masterController', ['$scope', '$location', '$rootScope
         };
 
         $scope.currentUser = $rootScope.currentUser;
-        $scope.isAuthenticated = $rootScope.isAuthenticated;
-        $scope.userRoles = $rootScope.userRoles;
 
     }]);

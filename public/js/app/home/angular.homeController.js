@@ -1,10 +1,7 @@
 //CONTROLLER
-SimpleBlogApp.controller('masterHomeController', ['$scope', '$rootScope', '$http', '$location',
-    function($scope, $rootScope, $http, $location) {
-        $scope.currentUser = $rootScope.currentUser;
-        $scope.isAuthenticated = $rootScope.isAuthenticated;
-        $scope.userRoles = $rootScope.userRoles;
-
+SimpleBlogApp.controller('masterHomeController', ['$scope', '$location',
+    function($scope, $location) {
+       
         $scope.searchForm = { key: "" };
         $scope.search = function() {
             if ($scope.searchForm.key != null && $scope.searchForm.key.length > 0) {

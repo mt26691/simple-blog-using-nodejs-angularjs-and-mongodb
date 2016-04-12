@@ -44,13 +44,12 @@ module.exports = {
                 return res.json({ err: true, msg: msg });
             }
 
-            var returnedData = { token: jwtService.issueToken(newToken) };
+            var returnedData = { token: jwtService.issueToken(newToken), isRemember: req.cookies.AuthSession.isRemember };
 
             //1 hour
             var expiresTime = 60 * 60 * 1000;
 
-            
-            if (req.cookies.AuthUser != null && req.cookies.AuthUser.isRemember) {
+            if (req.cookies.AuthSession.isRemember) {
                 //14 days 14h 60 min 60s 1000 milisecond    
                 expiresTime = 14 * 24 * 60 * 60 * 1000;
             }
@@ -59,8 +58,7 @@ module.exports = {
             res.cookie("AuthSession", returnedData, { expires: new Date(Date.now() + expiresTime), httpOnly: true });
 
             //return
-            res.json({ err: false, msg: "Thay đổi mật khẩu thành công." });
-
+            res.json({ err: false, msg: "Changepassword sucessfully." });
 
         });
     },
@@ -71,23 +69,11 @@ module.exports = {
         data.id = req.user.id;
 
         if (data.name == null) {
-            return res.json({ err: true, msg: "Thiếu tên" });
+            return res.json({ err: true, msg: "Name is missing" });
         }
 
         accountService.changeProfile(data, function(err, result, msg, savedUser) {
-            if (err || !result) {
-                return res.json({ err: true, msg: msg });
-            }
-            else {
-                //1 hour
-                var expiresTime = 60 * 60 * 1000;
-                if (req.cookies.AuthUser.isRemember) {
-                    //14 days 14h 60 min 60s 1000 milisecond    
-                    expiresTime = 14 * 24 * 60 * 60 * 1000;
-                }
-                var returnUser = { name: savedUser.name, role: savedUser.role, email: savedUser.email, isRemember: req.cookies.AuthUser.isRemember, id: req.user.id };
-                return res.json({ err: false, msg: msg, user: returnUser, expires: expiresTime });
-            }
+            return res.json({ err: !result, msg: msg });
         });
     },
 
@@ -180,5 +166,18 @@ module.exports = {
                 res.status(200).json({ err: false, user: foundUser, subjects: subjects });
             }
         })
+    },
+    me: function(req, res) {
+        if (req.user == null) {
+            return res.status(200).json({});
+        }
+        var accessRight = 0;
+        if (req.user.role == 'admin') {
+            accessRight = 9;
+        }
+        else if (req.user.role == 'editor') {
+            accessRight = 8;
+        }
+        return res.status(200).json({ name: req.user.name, email: req.user.email, role: req.user.role, accessRight: accessRight });
     }
 };

@@ -43,16 +43,16 @@
                 </form>
             </div>
             <ul class="nav navbar-nav navbar-right">
-                <li ng-if="currentUser==null"><a data-toggle="collapse" data-target=".navbar-collapse" href="/log-in">Log in</a></li>
-                <li ng-if="currentUser==null"><a data-toggle="collapse" data-target=".navbar-collapse" href="/register">Register &nbsp;</a></li>
+                <li ng-if="$root.currentUser==null"><a data-toggle="collapse" data-target=".navbar-collapse" href="/log-in">Log in</a></li>
+                <li ng-if="$root.currentUser==null"><a data-toggle="collapse" data-target=".navbar-collapse" href="/register">Register &nbsp;</a></li>
                 <li class="dropdown" ng-if="currentUser!=null">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-user fa-fw"></i> {{currentUser.name}} <i class="fa fa-caret-down"></i>&nbsp;&nbsp;
+                        <i class="fa fa-user fa-fw"></i> {{$root.currentUser.name}} <i class="fa fa-caret-down"></i>&nbsp;&nbsp;
                     </a>
                     <ul class="dropdown-menu dropdown-user">
                         <li><a data-toggle="collapse" data-target=".navbar-collapse" href="/change-password"><i class="fa fa-gear fa-fw"></i> Change Password</a>
                         </li>
-                        <li ng-if="userRoles == 'admin' || userRoles == 'editor'"><a href="/admin/home" target="_self"><i class="fa fa-pencil fa-fw"></i> Admin</a>
+                        <li ng-if="$root.currentUser.role == 'admin'"><a href="/admin/home" target="_self"><i class="fa fa-pencil fa-fw"></i> Admin</a>
                         </li>
                         <li class="divider"></li>
                         <li><a href="/log-out" target="_self"><i class="fa fa-sign-out fa-fw"></i> Sign out</a>
@@ -126,8 +126,6 @@
     <script src="/js/app/routes.js"></script>
     <script src="/js/app/home/angular.articleDetailsController.js"></script>
     <script src="/js/app/home/angular.homeController.js"></script>
-    <script src="/js/app/authenticate/authenticateService.js"></script>
-    <script src="/js/app/authenticate/authsession.js"></script>
     <script src="/js/app/authenticate/loginController.js"></script>
     <script src="/js/custom.js"></script>
     <script src="/js/app/account/angular.changePasswordController.js"></script>

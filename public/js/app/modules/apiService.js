@@ -78,18 +78,6 @@ apiServices.factory("Account", ["$resource", function($resource) {
             method: "POST",
             params: { action: "getResetPasswordData" }
         },
-        "verifyAccount": {
-            method: "POST",
-            params: { action: "verifyAccount" }
-        },
-        "attendSubject": {
-            method: "POST",
-            params: { action: "attendSubject" }
-        },
-        "getMySubjects": {
-            method: "GET",
-            params: { action: "mySubjects" }
-        },
         "getAll": {
             method: "GET",
             isArray: true,
@@ -99,7 +87,12 @@ apiServices.factory("Account", ["$resource", function($resource) {
             method: "GET",
             isArray: true,
             params: { action: "GetByServiceId" }
+        },
+        "me": {
+            method: "GET",
+            params: { action: "me" }
         }
+
     });
 }]);
 

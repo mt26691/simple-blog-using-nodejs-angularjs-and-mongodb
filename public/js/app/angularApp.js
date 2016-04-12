@@ -20,24 +20,30 @@ var SimpleBlogApp = angular.module('SimpleBlogApp', ['ngRoute', 'ngResource', 'n
         }
     ]);
 
-SimpleBlogApp.run(['$rootScope', function($rootScope) {
-    $rootScope.page = {
-        setTitle: function(title) {
-            this.title = title;
+SimpleBlogApp.run(['$rootScope','Account',
+    function($rootScope, Account) {
+        
+        //get current logged in user
+        Account.me({}, function(data) {
+            if (data.name && data.role && data.email) {
+                $rootScope.currentUser = data;
+            }
+        });
+        
+        $rootScope.itemsPerPage = 5;
+        $rootScope.maxPagingSize = 10;
+
+        $rootScope.page = {
+            setTitle: function(title) {
+                this.title = title;
+            }
         }
-    }
 
-    $rootScope.$on('$routeChangeSuccess', function(event, current, previous) {
-        $rootScope.page.setTitle(current.$$route.title || 'Simple blog using nodejs');
-    });
-}]);
+        $rootScope.$on('$routeChangeSuccess', function(event, current, previous) {
+            $rootScope.page.setTitle(current.$$route.title || 'Simple blog using nodejs');
+        });
 
-SimpleBlogApp.run(['$http', '$rootScope', 'authenticateService', '$window', function($http, $rootScope, authenticateService, $window) {
-    //update authentication state when load
-    authenticateService.updateAuthState();
-    $rootScope.itemsPerPage = 5;
-    $rootScope.maxPagingSize = 10;
-}]);
+    }]);
 
 //app constant
 SimpleBlogApp.constant('config', {

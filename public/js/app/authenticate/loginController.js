@@ -1,5 +1,5 @@
-SimpleBlogApp.controller('loginController', ['$scope',  '$window', 'AuthSession', 'AuthApi',
-    function($scope,  $window, AuthSession, AuthApi) {
+SimpleBlogApp.controller('loginController', ['$scope', '$window', 'AuthApi',
+    function($scope, $window, AuthApi) {
         //store init form base data
         $scope.formLogin = {};
 
@@ -8,16 +8,16 @@ SimpleBlogApp.controller('loginController', ['$scope',  '$window', 'AuthSession'
                 AuthApi.loginLocal($scope.formLogin, function callback(res) {
                     if (res.err) {
                         $scope.msg = res.msg;
-                    } else {
-                        //set user cookie
-                        AuthSession.create(res.user, res.expires);
-                        if (res.user.role == "admin") {
+                    }
+                    else {
+                        if (res.user.accessRight >= 8) {
                             $window.location.href = "/admin/home";
                         }
                         else {
                             $window.location.href = "/";
                         }
                     }
+
                 });
             }
         }

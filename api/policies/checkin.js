@@ -46,7 +46,7 @@ module.exports = function (req, res, next) {
                     foundAccessToken.user = foundAccessToken.user.id;
                     foundAccessToken.save();
                 }
-               
+                
                 next();
             });
 

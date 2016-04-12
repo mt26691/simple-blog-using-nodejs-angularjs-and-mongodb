@@ -56,7 +56,6 @@ module.exports = {
             id: postData.id,
             content: postData.content
         };
-        console.log("XXXXXXXXXXXXXXXXXXXXX");
         //create case, we do not allow to change subject in update case
         if (!item.id) {
             item.createdBy = req.user.id;

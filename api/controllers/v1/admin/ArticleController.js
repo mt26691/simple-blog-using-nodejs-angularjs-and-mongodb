@@ -64,7 +64,6 @@ module.exports = {
             content: postData.content
         };
         
-        console.log(postData.image);
         if (item.id == null) {
             item.createdBy = req.user.id;
         }

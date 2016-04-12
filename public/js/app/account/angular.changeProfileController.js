@@ -1,7 +1,7 @@
 
 //controler for change-profile.html
-SimpleBlogApp.controller('changeProfileController', ['$scope', 'AuthSession', '$routeParams', '$window', 'Account',
-    function($scope, AuthSession, $routeParams, $window, Account) {
+SimpleBlogApp.controller('changeProfileController', ['$scope', '$routeParams', '$window', 'Account',
+    function($scope,  $routeParams, $window, Account) {
         //store init form base data
         $scope.changeProfileForm = {};
         if ($routeParams.isChanged == 'thanh-cong') {
@@ -19,7 +19,6 @@ SimpleBlogApp.controller('changeProfileController', ['$scope', 'AuthSession', '$
                     else {
                         $scope.msg = data.msg;;
                         $scope.isChanged = true;
-                        AuthSession.create(data.user, data.expires);
                         $window.location.href = $window.location.href + "/thanh-cong";
                     }
                 });

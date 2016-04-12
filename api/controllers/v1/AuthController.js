@@ -9,12 +9,6 @@ var authService = require("../../services/AuthService");
 var jwtService = require("../../services/JWTService");
 var crypto = require('crypto');
 module.exports = {
-    'me': function(req, res) {
-        if (req.user == null) {
-            return res.status(200).json({});
-        }
-        return res.status(200).json({ name: req.user.name, email: req.user.email, role: req.user.role });
-    },
 
     'login': function(req, res) {
         var data = { email: req.body.email, password: req.body.password, isRemember: req.body.isRemember };
@@ -34,17 +28,18 @@ module.exports = {
                 }
                 //save with new access token
                 var clientToken = jwtService.issueToken(user.accessToken);
-                var returnUser = { name: user.name, role: user.role, email: user.email, isRemember: data.isRemember, id: user.id, accessRight: 1 };
+
+                var returnUser = { name: user.name, role: user.role, accessRight: 1 };
                 if (returnUser.role == "admin") {
                     returnUser.accessRight = 9;
                 }
 
-                var returnedData = { token: clientToken };
+                var returnedData = { token: clientToken, isRemember: data.isRemember };
 
                 //issue new cookie
                 res.cookie("AuthSession", returnedData, { expires: new Date(Date.now() + expiresTime), httpOnly: true });
 
-                res.status(200).json({ user: returnUser, expires: expiresTime });
+                res.status(200).json({ user: returnUser });
             }
         });
     },
@@ -56,7 +51,6 @@ module.exports = {
             });
         }
         res.clearCookie('AuthSession');
-        res.clearCookie('AuthUser');
         res.redirect('/');
     }
 };

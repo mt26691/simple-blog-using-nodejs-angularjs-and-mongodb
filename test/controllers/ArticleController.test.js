@@ -35,7 +35,6 @@ describe('Admin Article Controller Test', function() {
                     .get(apiURL)  // Attempt to use ArticleController (see api/routes/articleRoutes.js)
                     .expect('Content-type', /json/)
                     .end(function(err, res) {
-                        console.log(res.body);
                         res.status.should.equal(401);  // 401: Unauthorized!
                         done();
                     });
@@ -61,7 +60,6 @@ describe('Admin Article Controller Test', function() {
                         // Check returned data
                         var returnData = res.body.data;
                         var total = res.body.count;
-                        console.log(oldArticles);
                         assert.equal(oldArticles.length, total)
                         //check pagination
                         assert.equal(true, returnData.length <= testConfig.itemsPerPage);
