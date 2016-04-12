@@ -49,7 +49,8 @@ module.exports = {
             //1 hour
             var expiresTime = 60 * 60 * 1000;
 
-            if (req.cookies.AuthUser.isRemember) {
+            
+            if (req.cookies.AuthUser != null && req.cookies.AuthUser.isRemember) {
                 //14 days 14h 60 min 60s 1000 milisecond    
                 expiresTime = 14 * 24 * 60 * 60 * 1000;
             }
@@ -80,12 +81,10 @@ module.exports = {
             else {
                 //1 hour
                 var expiresTime = 60 * 60 * 1000;
-
                 if (req.cookies.AuthUser.isRemember) {
                     //14 days 14h 60 min 60s 1000 milisecond    
                     expiresTime = 14 * 24 * 60 * 60 * 1000;
                 }
-
                 var returnUser = { name: savedUser.name, role: savedUser.role, email: savedUser.email, isRemember: req.cookies.AuthUser.isRemember, id: req.user.id };
                 return res.json({ err: false, msg: msg, user: returnUser, expires: expiresTime });
             }

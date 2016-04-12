@@ -18,6 +18,7 @@ module.exports = {
     apiSendEmailUrl: '/api/v1/admin/sendEmail',
     
     apiChangeProfile: '/api/v1/account/changeProfile',
+    apiChangePassword:'/api/v1/account/changePassword',
     homeApi:'/api/v1/home/',
     lectureDetailsApi:'/api/v1/home/lectureDetails',
     itemsPerPage:5,

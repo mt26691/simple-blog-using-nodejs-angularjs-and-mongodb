@@ -223,10 +223,9 @@ describe('Account Controller test', function () {
             });
     });
 
-    it('let active user change their password', function (done) {
-        var apiAuth = testConfig.apiAuthUrl + '/login/local';
+    it('let user change their password', function (done) {
         server  // login
-            .post(apiAuth)
+            .post(testConfig.apiLogin)
             .send(oldUsers[0])  // login using email, password
             .expect('Content-type', /json/)
             .end(function (err, res) {
@@ -240,6 +239,7 @@ describe('Account Controller test', function () {
 
                         var returnedObj = res.body;
                         assert.equal(false, returnedObj.err);
+                        console.log("XXXXXXXXXXXXXXX");
                         //get me with new access token
                         var apiAuth1 = testConfig.apiAuthUrl + '/me';
                         server  // Get me
@@ -254,15 +254,13 @@ describe('Account Controller test', function () {
     });
 
     it('should let active user login, change his profile', function (done) {
-        var apiAuth = testConfig.apiAuthUrl + '/login/local';
         server  // login
-            .post(apiAuth)
-            .send(oldUsers[0])  // login using email, password [0] normal active user, 
+            .post(testConfig.apiLogin)
+            .send(oldUsers[0])  // login using email, password [0] normal user, 
             .expect('Content-type', /json/)
             .end(function (err, res) {
 
                 var returnedUser = res.body.user;
-
                 var updatingUser = returnedUser;
                 updatingUser.name = "New Name";
 

@@ -43,8 +43,7 @@ module.exports = {
             if (!foundUser) {
                 return callback(null, false, "User not found");
             }
-            console.log("XXXXXX");
-            console.log(changePasswordData.currentPassword);
+            
             if (foundUser.comparePassword(changePasswordData.currentPassword, function(err, result) {
                 if (err) {
                     return callback(err);
@@ -52,6 +51,7 @@ module.exports = {
                 if (!result) {
                     return callback(null, false, "The current password is wrong.");
                 }
+            
                 foundUser.password = changePasswordData.password;
                 foundUser.save();
                 //remove all access token belong to user
