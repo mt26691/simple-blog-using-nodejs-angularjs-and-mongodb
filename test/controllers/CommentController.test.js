@@ -15,6 +15,7 @@ describe('Admin Comment Controller Test', function() {
     var oldComments = [];
 
     beforeEach(function(done) {
+        
         initData(function(returnData) {
             newUsers = returnData.newUsers;
             oldUsers = returnData.oldUsers;
