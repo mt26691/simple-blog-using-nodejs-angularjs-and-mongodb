@@ -2,40 +2,43 @@ var assert = require('assert');
 var supertest = require("supertest");
 var testConfig = require('../testConfig');
 var server = supertest.agent(testConfig.host + ":" + testConfig.port);
-var apiURL = testConfig.apiArticleUrl;
+var apiURL = testConfig.apiCommenttUrl;
 var initData = require('../initData');
 
-describe('Admin Article Controller Test', function() {
+// See /api/controllers/v1/admin/CommentController.js
+describe('Admin Comment Controller Test', function() {
     var newUsers = [];
     var oldUsers = [];
     var newArticles = [];
-    var oldArticles = [];
+    var oldArtiles = [];
+    var newComments = [];
+    var oldComments = [];
 
     beforeEach(function(done) {
         initData(function(returnData) {
             newUsers = returnData.newUsers;
             oldUsers = returnData.oldUsers;
             newArticles = returnData.newArticles;
-            oldArticles = returnData.oldArticles;
+            oldArtiles = returnData.oldArtiles;
+            oldComments = returnData.oldComments;
+            newComments = returnData.newComments;
             done();
         });
     });
 
-    // See /api/controllers/v1/admin/ArticleController.js
-    it('should not let normal user query all articles', function(done) {
-        var apiLogin = testConfig.apiLogin;
+    it('should not let normal user query all comments', function(done) {
+        var apiAuth = testConfig.apiLogin;
         server
-            .post(apiLogin)
+            .post(apiAuth)
             .send(oldUsers[0])  // Log in as normal user
             .expect('Content-type', /json/)
             .expect(200)
             .end(function(err, res) {
                 res.status.should.equal(200); // OK
                 server
-                    .get(apiURL)  // Attempt to use ArticleController (see api/routes/articleRoutes.js)
+                    .get(apiURL)  // Attempt to use CommentController (see api/routes/commentRoutes.js)
                     .expect('Content-type', /json/)
                     .end(function(err, res) {
-                        console.log(res.body);
                         res.status.should.equal(401);  // 401: Unauthorized!
                         done();
                     });
@@ -43,8 +46,8 @@ describe('Admin Article Controller Test', function() {
 
     });
 
-    //query method in /api/controllers/v1/ArticleController.js
-    it('should let only admin query articles', function(done) {
+    //query CommentController
+    it('should let only admin query all comments', function(done) {
         var apiAuth = testConfig.apiLogin;
         server
             .post(apiAuth)
@@ -54,16 +57,15 @@ describe('Admin Article Controller Test', function() {
                 res.status.should.equal(200);
                 assert.equal(true, !res.body.err);  // check if login is ok
                 server
-                    .get(apiURL)  // query first first subjects
+                    .get(apiURL)  // query last 5 comments
                     .expect('Content-type', /json/)
                     .end(function(err, res) {
                         res.status.should.equal(200);  // query OK because I am ADMIN 
-                        // Check returned data
+                        // Check returned comments
                         var returnData = res.body.data;
+
                         var total = res.body.count;
-                        console.log(oldArticles);
-                        assert.equal(oldArticles.length, total)
-                        //check pagination
+                        assert.equal(newComments.length, total)
                         assert.equal(true, returnData.length <= testConfig.itemsPerPage);
                         done();
                     });
@@ -72,8 +74,8 @@ describe('Admin Article Controller Test', function() {
 
     });
 
-    //query method in /api/controllers/v1/ArticleController.js with param: page 2
-    it('should let admin query articles in page 2', function(done) {
+    //query in CommentController with param: page 2
+    it('should let admin query comment in page 2', function(done) {
         var apiAuth = testConfig.apiLogin;
         server
             .post(apiAuth)
@@ -83,10 +85,8 @@ describe('Admin Article Controller Test', function() {
                 res.status.should.equal(200);
 
                 assert.equal(true, !res.body.err);  // check if login is ok
-                //query with param page = 2
-                var queryUrl = apiURL + "?page=2";
                 server
-                    .get(queryUrl)  // query articles in pages 2
+                    .get(apiURL + "?page=2")  // query all comments in page 2
                     .expect('Content-type', /json/)
                     .end(function(err, res) {
                         res.status.should.equal(200);  // query OK because I am ADMIN 
@@ -94,10 +94,8 @@ describe('Admin Article Controller Test', function() {
                         // Check returned data
                         var returnedData = res.body.data;
                         var total = res.body.count;
-                        assert.equal(newArticles.length, total)
+                        assert.equal(newComments.length, total)
                         assert.equal(true, returnedData.length <= testConfig.itemsPerPage);
-                        //becase we have 6 record in database (initData.js)
-                        //page size = 5, so the number of database in page 2 must be 1
                         assert.equal(1, returnedData.length);
                         done();
                     });
@@ -106,8 +104,8 @@ describe('Admin Article Controller Test', function() {
 
     });
 
-    //query method in /api/controllers/v1/ArticleController.js with keyword = article 06
-    it('should let admin query articles which name contains article 06', function(done) {
+    //query in api/v1/admin/CommentController.js with param: keyword = Comment content 05
+    it('should let admin query comment which contain Comment content 05', function(done) {
         var apiAuth = testConfig.apiLogin;
         server
             .post(apiAuth)
@@ -117,10 +115,8 @@ describe('Admin Article Controller Test', function() {
                 res.status.should.equal(200);
 
                 assert.equal(true, !res.body.err);  // check if login is ok
-                //query with keyword = article 06
-                var queryUrl = apiURL + "?keyword=article 06";
                 server
-                    .get(queryUrl)  // query article
+                    .get(apiURL + "?keyword=Comment content 05")  // query all users
                     .expect('Content-type', /json/)
                     .end(function(err, res) {
                         res.status.should.equal(200);  // query OK because I am ADMIN 
@@ -128,7 +124,8 @@ describe('Admin Article Controller Test', function() {
                         // Check returned data
                         var returnedData = res.body.data;
                         var total = res.body.count;
-                        //only one article is returned
+
+                        //only one subject has name = subject 02
                         assert.equal(1, total)
                         assert.equal(true, returnedData.length <= testConfig.itemsPerPage);
                         assert.equal(1, returnedData.length);
@@ -140,8 +137,8 @@ describe('Admin Article Controller Test', function() {
 
     });
 
-    //query method in /api/controllers/v1/ArticleController.js with keyword = article, page = 2
-    it('should let admin query user which name contains article in page 2', function(done) {
+    //query in api/v1/admin/CommentController.js with param: keyword = Comment, page = 2
+    it('should let admin query comment which content contain Comment in page 2', function(done) {
         var apiAuth = testConfig.apiLogin;
         server
             .post(apiAuth)
@@ -151,9 +148,8 @@ describe('Admin Article Controller Test', function() {
                 res.status.should.equal(200);
 
                 assert.equal(true, !res.body.err);  // check if login is ok
-                var queryUrl = apiURL + "?keyword=article&page=2";
                 server
-                    .get(queryUrl)  // query articles
+                    .get(apiURL + "?keyword=Comment&page=2")  // query lectures
                     .expect('Content-type', /json/)
                     .end(function(err, res) {
                         res.status.should.equal(200);  // query OK because I am ADMIN 
@@ -161,87 +157,28 @@ describe('Admin Article Controller Test', function() {
                         // Check returned data
                         var returnedData = res.body.data;
                         var total = res.body.count;
-                        //all articles in database have name contains article
-                        assert.equal(newArticles.length, total)
+
+                        //only one Lecture has name contains Lecture in page 2
                         assert.equal(true, returnedData.length <= testConfig.itemsPerPage);
-                        //because we query data in page 2, page size = 5 so the return data must
-                        //contain only one article
                         assert.equal(1, returnedData.length);
                         done();
                     });
             });
-
     });
 
-    // get in /api/controllers/v1/ArticleController.js
-    it('should not let normal user query article by its id', function(done) {  // modify 'get' in policies.js 
-        var apiAuth = testConfig.apiLogin;
+    //get in api/v1/admin/CommentController.js
+    it('should not let normal user query comment by its id', function(done) {
+
         server
-            .post(apiAuth)
+            .post(testConfig.apiLogin)
             .send(oldUsers[0])  // Log in as normal user
             .expect('Content-type', /json/)
             .expect(200)
             .end(function(err, res) {
                 res.status.should.equal(200); // OK
                 server
-                    .get(apiURL + "/" + newArticles[0].id)
+                    .get(apiURL + "/" + newComments[0].id)
                     .expect('Content-type', /json/)
-                    .expect(401)
-                    .end(function(err, res) {
-                        //forbidden, because you are not admin
-                        res.status.should.equal(401);
-                        done();
-                    });
-            });
-    });
-
-    // get in /api/controllers/v1/ArticleController.js
-    it('should let admin query article by its id', function(done) {
-        var apiAuth = testConfig.apiLogin;
-        server
-            .post(apiAuth)
-            .send(oldUsers[1])  // log in as admin
-            .expect('Content-type', /json/)
-            .end(function(err, res) {
-                res.status.should.equal(200);
-
-                server
-                    .get(apiURL + "/" + newArticles[0].id)
-                    .expect('Content-type', /json/)
-                    .expect(200)
-                    .end(function(err, res) {
-                        res.status.should.equal(200);
-                        // Check returned subject
-                        var returnedData = res.body;
-
-                        assert.equal(newArticles[0].name, returnedData.name);
-                        assert.equal(newArticles[0].id, returnedData.id);
-                        assert.equal(newArticles[0].nameUrl, returnedData.nameUrl);
-                        assert.equal(newArticles[0].description, returnedData.description);
-                        assert.equal(newArticles[0].isActive, returnedData.isActive);
-                        done();
-                    });
-            });
-    });
-
-    // post in /api/controllers/v1/ArticleController.js
-    it('should not let normal user create/update subject', function(done) {
-        var updatingArticle = newArticles[0];
-        updatingArticle.name = "test new name";
-
-        var apiAuth = testConfig.apiLogin;
-        server
-            .post(apiAuth)
-            .send(oldUsers[0])  // log in as admin normal user
-            .expect('Content-type', /json/)
-            .end(function(err, res) {
-                res.status.should.equal(200);
-
-                assert.equal(true, !res.body.err);  // check if login is ok
-                server
-                    .post(apiURL)
-                    .send(updatingArticle)
-                    .expect("Content-type", /json/)
                     .expect(401)
                     .end(function(err, res) {
                         //forbidden
@@ -249,17 +186,90 @@ describe('Admin Article Controller Test', function() {
                         done();
                     });
             });
+    });
+
+    //get in api/v1/admin/CommentController.js
+    it('should let only admin query comment by its id', function(done) {
+        server
+            .post(testConfig.apiLogin)
+            .send(oldUsers[1])  // log in as admin
+            .expect('Content-type', /json/)
+            .end(function(err, res) {
+                res.status.should.equal(200);
+
+                server
+                    .get(apiURL + "/" + newComments[0].id)
+                    .expect('Content-type', /json/)
+                    .expect(200)
+                    .end(function(err, res) {
+                        res.status.should.equal(200);
+
+                        // Check returned subject
+                        var returnedData = res.body;
+                        assert.equal(newComments[0].content, returnedData.content);
+                        assert.equal(newComments[0].id, returnedData.id);
+                        done();
+                    });
+            });
+    });
+
+    //post in api/v1/admin/CommentController.js
+    it('should let normal user create comment only', function(done) {
+        var updatingItem = oldComments[5];
+        updatingItem.content = "test new comment";
+
+        server
+            .post(testConfig.apiLogin)
+            .send(oldUsers[0])  // log in as admin normal user
+            .expect('Content-type', /json/)
+            .end(function(err, res) {
+                res.status.should.equal(200);
+                assert.equal(true, !res.body.err);  // check if login is ok
+                server
+                    .post(apiURL)
+                    .send(updatingItem)
+                    .expect("Content-type", /json/)
+                    .expect(200)
+                    .end(function(err, res) {
+                        assert(false, res.body.err);
+                        done();
+                    });
+            });
 
     });
 
-    // post in /api/controllers/v1/ArticleController.js
-    it('should let admin create artcile', function(done) {
-        var newlyArticle = oldArticles[0];
-        newlyArticle.name = "test new article";
+    //post in api/v1/admin/CommentController.js
+    it('should not let normal user update comment', function(done) {
+        var updatingItem = newComments[4];
+        updatingItem.content = "test new comment";
 
-        var apiAuth = testConfig.apiLogin;
         server
-            .post(apiAuth)
+            .post(testConfig.apiLogin)
+            .send(oldUsers[0])  // log in as admin normal user
+            .expect('Content-type', /json/)
+            .end(function(err, res) {
+                res.status.should.equal(200);
+                assert.equal(true, !res.body.err);  // check if login is ok
+                server
+                    .post(apiURL)
+                    .send(updatingItem)
+                    .expect("Content-type", /json/)
+                    .expect(200)
+                    .end(function(err, res) {
+                        assert(true, res.body.err);
+                        done();
+                    });
+            });
+
+    });
+
+    //post in api/v1/admin/CommentController.js
+    it.only('should let only admin update all comment', function(done) {
+        var newlyItem = newComments[0];
+        newlyItem.content = "test content";
+
+        server
+            .post(testConfig.apiLogin)
             .send(oldUsers[1])  // log in as admin
             .expect('Content-type', /json/)
             .end(function(err, res) {
@@ -268,13 +278,13 @@ describe('Admin Article Controller Test', function() {
                 assert.equal(true, !res.body.err);  // check if login is ok
                 server
                     .post(apiURL)
-                    .send(newlyArticle)
+                    .send(newlyItem)
                     .expect("Content-type", /json/)
                     .expect(200)
                     .end(function(err, res) {
                         res.status.should.equal(200);
                         assert.equal(false, res.body.err);
-                        assert.equal(newlyArticle.name, res.body.data.name);
+                        assert.equal(newlyItem.content, res.body.data.content);
                         assert.equal(true, res.body.data.id.length > 0);
                         done();
                     });
@@ -282,68 +292,10 @@ describe('Admin Article Controller Test', function() {
 
     });
 
-    // post in /api/controllers/v1/ArticleController.js
-    it('should let admin update article', function(done) {
-        var updatingArticle = newArticles[0];
-        updatingArticle.name = "test new article";
-        var apiAuth = testConfig.apiLogin;
+    //delete in api/v1/admin/CommentController.js
+    it('should not let normal users delete another comments', function(done) {
         server
-            .post(apiAuth)
-            .send(oldUsers[1])  // log in as admin
-            .expect('Content-type', /json/)
-            .end(function(err, res) {
-                res.status.should.equal(200);
-
-                assert.equal(true, !res.body.err);  // check if login is ok
-                server
-                    .post(apiURL)
-                    .send(updatingArticle)
-                    .expect("Content-type", /json/)
-                    .expect(200)
-                    .end(function(err, res) {
-                        res.status.should.equal(200);
-                        assert.equal(false, res.body.err);
-                        assert.equal(updatingArticle.name, res.body.data.name);
-                        done();
-                    });
-            });
-
-    });
-
-    // post in /api/controllers/v1/ArticleController.js
-    it('should not let admin update user with missing fields', function(done) {
-        var updatingArticle = newArticles[0];
-        updatingArticle.name = null;
-
-        var apiAuth = testConfig.apiLogin;
-        server
-            .post(apiAuth)
-            .send(oldUsers[1])  // log in as admin
-            .expect('Content-type', /json/)
-            .end(function(err, res) {
-                res.status.should.equal(200);
-
-                assert.equal(true, !res.body.err);  // check if login is ok
-                server
-                    .post(apiURL)
-                    .send(updatingArticle)
-                    .expect("Content-type", /json/)
-                    .expect(200)
-                    .end(function(err, res) {
-                        res.status.should.equal(200);
-                        //error = true because of missing name field
-                        assert.equal(true, res.body.err);
-                        done();
-                    });
-            });
-
-    });
-
-    // delete in /api/controllers/v1/ArticleController.js
-    it('should not let normal user delete artcile', function(done) {
-        var apiAuth = testConfig.apiLogin;
-        server
-            .post(apiAuth)
+            .post(testConfig.apiLogin)
             .send(oldUsers[0])  // log in as normal user
             .expect('Content-type', /json/)
             .end(function(err, res) {
@@ -351,22 +303,20 @@ describe('Admin Article Controller Test', function() {
 
                 assert.equal(true, !res.body.err);  // check if login is ok
                 server
-                    .delete(apiURL + "/" + newArticles[0].id)
+                    .delete(apiURL + "/" + newComments[3].id)
                     .expect("Content-type", /json/)
-                    .expect(401)
                     .end(function(err, res) {
-                        res.status.should.equal(401);
+                        assert.equal(true, res.body.err);
                         done();
                     });
             });
 
     });
 
-    // delete in /api/controllers/v1/ArticleController.js
-    it('should let admin delete article', function(done) {
-        var apiAuth = testConfig.apiLogin;
+    //delete in api/v1/admin/CommentController.js
+    it.only('should let admin delete all comments', function(done) {
         server
-            .post(apiAuth)
+            .post(testConfig.apiLogin)
             .send(oldUsers[1])  // log in as admin
             .expect('Content-type', /json/)
             .end(function(err, res) {
@@ -374,7 +324,7 @@ describe('Admin Article Controller Test', function() {
 
                 assert.equal(true, !res.body.err);  // check if login is ok
                 server
-                    .delete(apiURL + "/" + newArticles[0].id)
+                    .delete(apiURL + "/" + newComments[0].id)
                     .expect("Content-type", /json/)
                     .expect(200)
                     .end(function(err, res) {

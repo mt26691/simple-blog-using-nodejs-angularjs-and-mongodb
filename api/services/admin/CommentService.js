@@ -119,23 +119,18 @@ module.exports = {
                 return callback(err);
             }
 
-            //only admin or creator can delete comment
-            if (user.role == "admin") {
-                Comment.remove({ _id: id }, function(err, result) {
-                    if (err) {
-                        return callback(err);
-                    }
-                    if (result.result.ok) {
-                        return callback(null, true, "Comment Deleted");
-                    }
-                    else {
-                        return callback(null, false, "Error while deleting comment");
-                    }
-                });
-            }
-            else {
-                return callback(null, false, "You do not have permission to delete comment");
-            }
+            Comment.remove({ _id: id }, function(err, result) {
+                if (err) {
+                    return callback(err);
+                }
+                if (result.result.ok) {
+                    return callback(null, true, "Comment Deleted");
+                }
+                else {
+                    return callback(null, false, "Error while deleting comment");
+                }
+            });
+
         });
 
     }

@@ -2,7 +2,7 @@
 * User Controller
 *
 * @module      :: Account Controller
-* @description	:: register new user, verify user, send password reset email.
+* @description	:: register new user,changepassword, send password reset email.
 */
 
 var model = require('../../models/models')();

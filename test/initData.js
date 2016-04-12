@@ -5,7 +5,8 @@ module.exports = function(callback) {
     var User = models.User;
     var Article = models.Article;
     var AccessToken = models.AccessToken;
-
+    var Comment = models.Comment;
+    
     data.oldUsers = [
         //0 normal user
         { name: "user01", email: "user01@gmail.com", password: "123456", role: "normal" },
@@ -47,7 +48,28 @@ module.exports = function(callback) {
                 //create new articles
                 Article.create(data.oldArticles, function(err, articles) {
                     data.newArticles = articles;
-                    callback(data);
+                    data.oldComments = [
+                        //0
+                        { content: "Comment content 1", isActive: true, article: data.newArticles[0].id, createdBy: data.newUsers[0].id, updatedBy: data.newUsers[1].id },
+                        //1
+                        { content: "Comment content 2", isActive: true, article: data.newArticles[1].id, createdBy: data.newUsers[1].id, updatedBy: data.newUsers[1].id },
+                        //2
+                        { content: "Comment content 03", isActive: true, article: data.newArticles[1].id, createdBy: data.newUsers[2].id, updatedBy: data.newUsers[1].id },
+                        //3
+                        { content: "Comment content 04", isActive: false, article: data.newArticles[1].id, createdBy: data.newUsers[3].id, updatedBy: data.newUsers[1].id },
+                        //4
+                        { content: "Comment content 05", isActive: false, article: data.newArticles[1].id, createdBy: data.newUsers[2].id, updatedBy: data.newUsers[1].id },
+                        //5
+                        { content: "Comment content 06", isActive: false, article: data.newArticles[1].id, createdBy: data.newUsers[4].id, updatedBy: data.newUsers[1].id },
+                    ];
+
+                    Comment.remove({}, function(err, result) {
+                        Comment.create(data.oldComments, function(err, newComments) {
+                            data.newComments = newComments;
+                            callback(data);
+                        });
+
+                    });
                 });
             });
         });

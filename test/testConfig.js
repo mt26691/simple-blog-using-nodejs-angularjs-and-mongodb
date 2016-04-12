@@ -12,6 +12,8 @@ module.exports = {
     apiRegister:'/api/v1/account/register',
     //article
     apiArticleUrl: '/api/v1/admin/article',
+    //apiCommenttUrl
+    apiCommenttUrl:'/api/v1/admin/comment',
     apiUserUrl: '/api/v1/admin/user',
     apiSendEmailUrl: '/api/v1/admin/sendEmail',
     
