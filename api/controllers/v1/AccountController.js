@@ -67,7 +67,7 @@ module.exports = {
         var data = {};
         data.name = req.body.name;
         data.id = req.user.id;
-        
+
         if (data.name == null) {
             return res.json({ err: true, msg: "Name is missing" });
         }
@@ -157,13 +157,16 @@ module.exports = {
         });
     },
     getProfile: function(req, res) {
-        var userId = req.body.userId;
-        accountService.getProfile(userId, function(err, foundUser, subjects) {
+        var userId = req.query.userId;
+        if (userId == null) {
+            return res.status(200).json({ err: true, msg: "User id is missing" });
+        }
+        accountService.getProfile(userId, function(err, foundUser) {
             if (err) {
                 res.status(200).json({ err: true, msg: "Exp" });
             }
             else {
-                res.status(200).json({ err: false, user: foundUser, subjects: subjects });
+                res.status(200).json({ err: false, user: foundUser });
             }
         })
     },

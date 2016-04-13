@@ -43,7 +43,7 @@ SimpleBlogApp.controller('userController', ['$scope', 'User', 'toastr',
                         $scope.newEditForm = null;
                         $scope.msg = "";
                         $scope.err = false;
-                        toastr.success('User được lưu.');
+                        toastr.success('User saved.');
                         //update list item
                         $scope.query();
                     }

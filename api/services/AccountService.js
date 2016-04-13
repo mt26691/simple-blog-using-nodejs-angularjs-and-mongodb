@@ -127,15 +127,8 @@ module.exports = {
                 if (err) {
                     return callBack(err);
                 }
-                if (!foundUser) {
-                    return callBack(null, foundUser, null);
-                }
-                Subject
-                    .find({ createdBy: userId })
-                    .select({ name: 1, nameUrl: 1 })
-                    .exec(function(err, subjects) {
-                        return callBack(null, foundUser, subjects);
-                    });
+
+                return callBack(null, foundUser);
             });
     },
 };

@@ -7,7 +7,7 @@ var isAuthenticated = require("../policies/isAuthenticated");
 
 router.post('/register', accountController.register);
 
-router.post('/getProfile', accountController.getProfile);
+router.get('/getProfile', accountController.getProfile);
 
 router.post('/sendPasswordResetEmail', accountController.sendPasswordResetEmail);
 

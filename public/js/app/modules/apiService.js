@@ -59,7 +59,7 @@ apiServices.factory("Account", ["$resource", function($resource) {
             params: { action: "sendPasswordResetEmail" }
         },
         "getProfile": {
-            method: "POST",
+            method: "GET",
             params: { action: "getProfile" }
         },
         "changePassword": {

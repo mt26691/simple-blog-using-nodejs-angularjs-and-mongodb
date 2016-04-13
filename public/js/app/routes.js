@@ -89,6 +89,12 @@ SimpleBlogApp.config(['$routeProvider', '$locationProvider', function($routeProv
             title: 'About us',
             templateUrl: '/templates/infor/policies.html',
         },
+        '/user/:userId':
+        {
+            title: 'User',
+            templateUrl: '/templates/account/userProfile.html',
+            controller: 'getUserProfileController'
+        },
         '/:nameUrl/:id':
         {
             templateUrl: '/templates/article_details.html',

@@ -1,36 +1,21 @@
 <div ng-if="!err" class="row">
     <div class="col-xs-12">
-        <h3>Thông tin liên hệ</h3>
+        <h3>User information</h3>
         <hr class="gray-hr" />
         <table class="table">
             <tbody>
                 <tr>
-                    <td>Họ tên</td>
+                    <td>Name</td>
                     <td>{{user.name}}</td>
                 </tr>
                 <tr>
                     <td>Email</td>
                     <td>{{user.email}}</td>
                 </tr>
-                <tr>
-                    <td>Điện thoại liên hệ</td>
-                    <td>{{user.email}}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="col-xs-12" ng-if="subjects.length >0">
-        <h3>Các môn đã viết</h3>
-        <hr class="gray-hr" />
-        <table class="table">
-            <tbody>
-                <tr ng-repeat="subject in subjects">
-                    <td><a href="/{{subject.nameUrl}}" title="{{subject.name}}">{{subject.name}}</a></td>
-                </tr>
             </tbody>
         </table>
     </div>
 </div>
 <div ng-if="err" class="row text-center">
-    <h3>Không tìm thấy tài khoản.</h3>
+    <h3>User not found.</h3>
 </div>
