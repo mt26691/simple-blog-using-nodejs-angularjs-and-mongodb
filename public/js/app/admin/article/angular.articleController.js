@@ -101,7 +101,6 @@ SimpleBlogApp.controller('articleController', ['$scope', '$http', 'config', 'Art
                         var main = '/images/main/'+uploadFileInfo.data.fileName;
                         var mid = '/images/mid/'+uploadFileInfo.data.fileName;
                         var thumb = '/images/thumb/'+uploadFileInfo.data.fileName;
-                        debugger;
                         $scope.newEditForm.image = {main:main,mid:mid,thumbnail:thumb};
                         $scope.firstLoad = false;
                     }

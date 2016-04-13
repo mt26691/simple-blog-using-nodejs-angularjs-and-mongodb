@@ -13,7 +13,6 @@ SimpleBlogApp.controller('userController', ['$scope', 'User', 'toastr',
             form.$setPristine();
             form.$setUntouched();
             User.get({ id: id }, function callback(user) {
-                debugger;
                 $scope.newEditForm = user;
                 $scope.newEditForm.isActive === true ? $scope.newEditForm.isActive = "1" : $scope.newEditForm.isActive = "0";
             });

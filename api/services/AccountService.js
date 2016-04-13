@@ -43,7 +43,7 @@ module.exports = {
             if (!foundUser) {
                 return callback(null, false, "User not found");
             }
-            
+
             if (foundUser.comparePassword(changePasswordData.currentPassword, function(err, result) {
                 if (err) {
                     return callback(err);
@@ -51,7 +51,7 @@ module.exports = {
                 if (!result) {
                     return callback(null, false, "The current password is wrong.");
                 }
-            
+
                 foundUser.password = changePasswordData.password;
                 foundUser.save();
                 //remove all access token belong to user
@@ -96,6 +96,25 @@ module.exports = {
                 //remove all access token belong to a user
                 AccessToken.remove({ user: foundUser.id });
                 callback(null, foundUser);
+            });
+
+        });
+    },
+    changeProfile: function(profileData, callback) {
+        User.findOne({ _id: profileData.id }, function(err, foundUser) {
+            if (err) {
+                return callback(err);
+            }
+            if (!foundUser) {
+                return callback(null, false, "User not found");
+            }
+
+            foundUser.name = profileData.name;
+            foundUser.save(function(err, savedUser) {
+                if (err) {
+                    return callback(err, false, "Server Error");
+                }
+                return callback(null, true, "Change profile successfully", savedUser);
             });
 
         });

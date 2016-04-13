@@ -15,7 +15,6 @@ SimpleBlogApp.config(['$routeProvider', '$locationProvider', function($routeProv
         },
         '/admin/dashboard':
         {
-            // templateUrl: '/templates/admin/user/users.html',
             templates: "<div></div>",
             controller: 'userController',
             role: 'admin'
@@ -43,7 +42,6 @@ SimpleBlogApp.config(['$routeProvider', '$locationProvider', function($routeProv
             title: 'Tài khoản',
             templateUrl: '/templates/account/userProfile.html',
             controller: 'getUserProfileController',
-            //notAllowLoggedInUser:true
         },
         '/register':
         {
@@ -68,14 +66,12 @@ SimpleBlogApp.config(['$routeProvider', '$locationProvider', function($routeProv
             title: 'Change password',
             templateUrl: '/templates/account/change-password.html',
             controller: 'changePasswordController',
-            //notAllowLoggedInUser:true
         },
-        '/doi-thong-tin/:isChanged?':
+        '/change-profile/':
         {
-            title: 'Đổi thông tin',
+            title: 'Change profile',
             templateUrl: '/templates/account/change-profile.html',
             controller: 'changeProfileController',
-            //notAllowLoggedInUser:true
         },
         '/reset-password/:passwordResetToken?':
         {

@@ -20,7 +20,6 @@ SimpleBlogApp.controller('resetPasswordController', ['$scope', 'Account', '$rout
         }
         
         Account.getResetPasswordData({ passwordResetToken: $routeParams.passwordResetToken }, function callback(data) {
-            debugger;
             if (data.err) {
                 $scope.notFoundUser = true;
             }

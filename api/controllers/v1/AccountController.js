@@ -67,7 +67,7 @@ module.exports = {
         var data = {};
         data.name = req.body.name;
         data.id = req.user.id;
-
+        
         if (data.name == null) {
             return res.json({ err: true, msg: "Name is missing" });
         }

@@ -1,9 +1,9 @@
-SimpleBlogApp.controller('articleDetailsController', ['$scope', '$routeParams', 'HomeApi', 'authenticateService', 'Comment',
-    function($scope, $routeParams, HomeApi, authenticateService, Comment) {
+SimpleBlogApp.controller('articleDetailsController', ['$scope', '$routeParams', 'HomeApi', '$rootScope', 'Comment',
+    function($scope, $routeParams, HomeApi, $rootScope, Comment) {
         var nameUrl = $routeParams.nameUrl;
         var id = $routeParams.id;
         $scope.err = false;
-        $scope.isAuthenticated = authenticateService.isAuthenticated();
+        $scope.isAuthenticated = $rootScope.currentUser != null;
 
         $scope.comment = { content: "", article: null };
         HomeApi.getArtcileDetails({ nameUrl: nameUrl, id: id },
