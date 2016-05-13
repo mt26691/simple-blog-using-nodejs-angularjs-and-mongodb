@@ -1,35 +1,41 @@
 /**
-* User Controller
+* Auth Controller
 *
 * @module      :: Auth Controller
-* @description	:: User Controller for login, logout, get current login user
+* @description	:: Auth Controller for login, logout
 */
 
 var authService = require("../../services/AuthService");
 var jwtService = require("../../services/JWTService");
-var crypto = require('crypto');
 module.exports = {
-
+    
+     //Login method
     'login': function(req, res) {
+        //get post data
         var data = { email: req.body.email, password: req.body.password, isRemember: req.body.isRemember };
         authService.logIn(data, function(err, user) {
             if (err) {
                 return res.status(200).json({ err: true, msg: "server error" });
             }
+            //if user is not found
             if (!user) {
                 return res.status(200).json({ err: true, msg: "Wrong username or password" });
             }
+            //if user login successfully
             else {
-                //1 hour
+                //set expiresTime default to one hour
                 var expiresTime = 60 * 60 * 1000;
+                //if user is check remember me option, set expiresTime to 14 days
                 if (data.isRemember) {
                     //14 days 14h 60 min 60s 1000 milisecond    
                     expiresTime = 14 * 24 * 60 * 60 * 1000;
                 }
+                
                 //save with new access token
                 var clientToken = jwtService.issueToken(user.accessToken);
 
                 var returnUser = { name: user.name, role: user.role, accessRight: 1 };
+                //if user is admin, set access right to 9
                 if (returnUser.role == "admin") {
                     returnUser.accessRight = 9;
                 }
@@ -43,6 +49,7 @@ module.exports = {
             }
         });
     },
+    
     //let user logout
     'logout': function(req, res) {
         if (req.user) {
