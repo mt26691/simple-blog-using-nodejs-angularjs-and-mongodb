@@ -1,16 +1,16 @@
 /**
-* User Controller
+* Article Controller
 *
-* @module      :: Subject admin
-* @description	:: CRUD subject
+* @module      :: Article Controller
+* @description	:: CRUD Article for blog
 */
 
-var config = require("../../../config/WebConfig");
+//load article services
 var articleService = require("../../../services/admin/ArticleService");
 module.exports = {
     //query article in database, pagination supported
     'query': function(req, res) {
-        //current page
+        //get current page
         var page = req.query.page == null ? 1 : req.query.page;
         //search key word
         var keyword = req.query.keyword == null ? "" : req.query.keyword;
@@ -49,9 +49,11 @@ module.exports = {
             return res.status(200).json({ err: true, msg: "Id not found" });
         }
     },
-    //create, update user
+    
+    //create, update article
     'post': function(req, res) {
         var postData = req.body;
+        //article data
         var item = {
             id: postData.id,
             name: postData.name,
@@ -77,7 +79,8 @@ module.exports = {
         //create update article
         articleService.post(item, function(err, result, msg, data) {
             if (err) {
-                return res.status(500).json({ err: true, msg: "Server error in admin subject post" });
+                //return error back to client
+                return res.status(500).json({ err: true, msg: "Server error in ArticleController/post" });
             }
             if (!result) {
                 return res.status(200).json({ err: true, msg: msg });
@@ -86,6 +89,7 @@ module.exports = {
         });
 
     },
+    
     //delete article
     'delete': function(req, res) {
         var id = req.params.id;
@@ -96,7 +100,7 @@ module.exports = {
 
         articleService.delete(id, function(err, result, msg) {
             if (err) {
-                return res.status(500).json({ err: true, msg: "Server error when deleting article" });
+                return res.status(500).json({ err: true, msg: "Server error in ArticleController/delete" });
             }
 
             return res.status(200).json({ err: !result, msg: msg });

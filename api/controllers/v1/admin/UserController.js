@@ -5,10 +5,9 @@
 * @description	:: CRUD user
 */
 
-var config = require("../../../config/WebConfig");
 var userService = require("../../../services/admin/UserService");
 module.exports = {
-    //list of user
+    //query user in database, pagination supported
     'query': function(req, res) {
         //current page
         var page = req.query.page == null ? 1 : req.query.page;
@@ -25,9 +24,10 @@ module.exports = {
             }
         });
     },
-    //user details
+    
+    //get user base on id
     'get': function(req, res) {
-        //get user id from req params
+        //get userId from request param
         var userId = req.params.id;
         if (userId != null) {
             userService.get(userId, function(err, foundUser) {
@@ -45,6 +45,7 @@ module.exports = {
             return res.status(200).json({ err: true, msg: "user is is missing" });
         }
     },
+    
     //create, update user
     'post': function(req, res) {
         var user = {};

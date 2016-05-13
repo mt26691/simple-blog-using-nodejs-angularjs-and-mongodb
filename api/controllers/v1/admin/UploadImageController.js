@@ -5,10 +5,6 @@
 * @description	:: CRUD Lecture
 */
 
-// var path = require('path');
-// var fs = require('fs')
-//     , gm = require('gm');
-
 var path = require('path');
 var fs = require('fs');
 var gm = require('gm');
@@ -70,7 +66,8 @@ module.exports = {
 
         //remove temp file
         fs.unlinkSync(req.file.path);
-
+        
+        //return html back to ckeditor callback function
         var html = "";
         html += "<script type='text/javascript'>";
         html += "    var funcNum = " + req.query.CKEditorFuncNum + ";";

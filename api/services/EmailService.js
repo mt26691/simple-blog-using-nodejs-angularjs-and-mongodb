@@ -1,11 +1,10 @@
 /**
  * Node Mailer service and setup
  */
-
 var nodemailer = require("nodemailer");
 var mail = require("../config/MailConfig");
 var _ = require("lodash");
-var defaultFrom = "hocdai.com";
+var defaultFrom = "mywebSite";
 var fromEmail = "hotro@hocdai.com"
 module.exports = {
 
