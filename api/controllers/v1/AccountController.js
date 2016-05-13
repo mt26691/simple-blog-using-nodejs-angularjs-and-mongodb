@@ -8,10 +8,10 @@
 var model = require('../../models/models')();
 var User = model.User;
 var accountService = require("../../services/AccountService");
-var emailService = require("../../services/EmailService");
 var jwtService = require("../../services/JWTService");
 
 module.exports = {
+    
     //Register new user with name, email and password
     'register': function(req, res) {
         var registerData = { email: req.body.email, name: req.body.name, password: req.body.password };
@@ -29,26 +29,25 @@ module.exports = {
 
     //logged in users can change their password
     changePassword: function(req, res) {
-        if (!req.user) {
-            return res.status(401).json("not authenticated user");
-        }
+        
         var changePasswordData = { currentPassword: req.body.currentPassword, password: req.body.password, id: req.user.id };
 
         accountService.changePassword(changePasswordData, function(err, result, msg, newToken) {
-
             if (err) {
                 return res.json({ err: true, msg: "unexpected error while changing password" });
             }
-
+            
+            //if user can not change password
             if (result === false) {
                 return res.json({ err: true, msg: msg });
             }
-
+            
+            //data return back to client, we use jwtService to encrypt cookie
             var returnedData = { token: jwtService.issueToken(newToken), isRemember: req.cookies.AuthSession.isRemember };
 
-            //1 hour
+            //cookie default expired date
             var expiresTime = 60 * 60 * 1000;
-
+            //if user check is rember me option, we will set cookie expired date to 14 days
             if (req.cookies.AuthSession.isRemember) {
                 //14 days 14h 60 min 60s 1000 milisecond    
                 expiresTime = 14 * 24 * 60 * 60 * 1000;
@@ -57,11 +56,12 @@ module.exports = {
             //issue new cookie
             res.cookie("AuthSession", returnedData, { expires: new Date(Date.now() + expiresTime), httpOnly: true });
 
-            //return
-            res.json({ err: false, msg: "Changepassword sucessfully." });
+            //return result to client
+            res.json({ err: false, msg: "Password is changed sucessfully." });
 
         });
     },
+    
     //logged in users can change their profile
     changeProfile: function(req, res) {
         var data = {};
@@ -86,15 +86,14 @@ module.exports = {
         if (!email) {
             return res.status(200).json({ err: true, msg: "Email not found." });
         }
-
+        
         User.findOne({ email: email }, function(err, user) {
             if (err) return res.serverError(err);
-
+            //if user is not found
             if (!user) {
                 return res.json({ err: true, msg: "Email not found" });
             }
-
-            //for testing purpose
+            //if user is found, send reset email which contains password reset token
             user.sendPasswordResetEmail(function() {
                 return res.json({ email: user.email });
             });
@@ -110,14 +109,15 @@ module.exports = {
     getResetPasswordData: function(req, res) {
 
         var passwordResetToken = req.body.passwordResetToken;
-
+        //check password reset token
         if (!passwordResetToken || passwordResetToken.length < 32 || passwordResetToken.length > 40) {
             return res.json({ err: true, msg: "Token is missing" });
         }
 
-        //find user by id
+        //Find user by password reset token
         User.findOne({ "passwordResetToken.value": passwordResetToken }, function(err, user) {
             if (err) return res.status(500);
+            
             //if user can not be found
             if (!user) {
                 return res.json({ err: true, msg: "Link is wrong." });
@@ -138,7 +138,6 @@ module.exports = {
     * Update user password 
     * Expects and consumes a password reset token
     */
-
     resetPassword: function(req, res) {
 
         var resetPasswordData = { password: req.body.password, passwordResetToken: req.body.passwordResetToken };
@@ -156,6 +155,8 @@ module.exports = {
             }
         });
     },
+        
+    //get user profile
     getProfile: function(req, res) {
         var userId = req.query.userId;
         if (userId == null) {
@@ -170,6 +171,8 @@ module.exports = {
             }
         })
     },
+    
+    //get current user data
     me: function(req, res) {
         if (req.user == null) {
             return res.status(200).json({});
