@@ -1,5 +1,5 @@
 /**
-* is Authenticated
+* Check in policy
 *
 * @module      :: Check in policy, it attach current user to request
 */
@@ -17,7 +17,7 @@ module.exports = function (req, res, next) {
     if (token == null || token == '') {
         return next();
     }
-    
+    //decrypt user token
     jwtService.verifyToken(token, function (err, decryptedData) {
         if (err) {
             next();
@@ -36,7 +36,7 @@ module.exports = function (req, res, next) {
 
                 req.user = foundAccessToken.user;
                 var compareTime = new Date().setHours(new Date().getHours() - 1);
-                //for testing
+               
                 compareTime = new Date().setHours(new Date().getHours());
                 var loginTime = new Date(foundAccessToken.lastTimeUse);
                 //if user login < 1h not update last time use

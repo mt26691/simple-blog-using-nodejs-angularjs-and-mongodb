@@ -1,3 +1,10 @@
+/**
+* Home Routes
+*
+* @module      :: Home Routes
+* @description	:: perform request that related to home page, the things that anonymous users see
+*/
+
 var express = require('express');
 var router = express.Router();
 var homeController = require("../controllers/v1/HomeController");

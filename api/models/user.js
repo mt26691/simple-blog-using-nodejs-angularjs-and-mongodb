@@ -7,12 +7,15 @@ var emailService = require("../services/EmailService");
 var Schema = mongoose.Schema;
 
 var userSchema = new mongoose.Schema({
+    //name
     name: {
         type: String,
         required: true,
         minlength: 4,
         maxlength: 48,
     },
+    //user email, we use match to check is it a right email
+    //only allow lowercase
     email: {
         type: String,
         required: true,

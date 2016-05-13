@@ -1,3 +1,10 @@
+/**
+* Index Routes
+*
+* @module      :: Index Routes
+* @description	:: we use index route to generate right layout page for clients
+*/
+
 var express = require('express');
 var router = express.Router();
 var checkIn = require("../policies/checkin");

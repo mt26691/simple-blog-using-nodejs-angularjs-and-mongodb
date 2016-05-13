@@ -3,18 +3,23 @@ var webConfig = require("../config/WebConfig");
 var Schema = mongoose.Schema;
 
 var articleSchema = new mongoose.Schema({
+    //name of article
     name: {
         type: String,
         required: true,
         minlength: 2,
         maxlength: 256
     },
+    //name url of article, we use it for user friendly url
+    //if article name is "this is a test article" 
+    //name url will be   "this-is-a-test-article"
     nameUrl: {
         type: String,
         required: true,
         minlength: 2,
         maxlength: 256
     },
+    //article description
     description: {
         type: String,
         required: true,
@@ -25,6 +30,7 @@ var articleSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+     //article image, 
     image: {
         main: { type: String },
         mid: { type: String },

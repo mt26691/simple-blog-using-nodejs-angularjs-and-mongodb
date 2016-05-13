@@ -3,6 +3,7 @@ var webConfig = require("../config/WebConfig");
 var Schema = mongoose.Schema;
 var emailService = require("../services/EmailService");
 
+//comment schema
 var commentSchema = new mongoose.Schema({
 
     content: {
@@ -18,7 +19,7 @@ var commentSchema = new mongoose.Schema({
     inActiveReason: {
         type: String
     },
-    //lecture which comment belong to
+    //article which comment belong to
     article: { type: Schema.Types.ObjectId, ref: 'Article', required: true, },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
@@ -31,7 +32,7 @@ commentSchema.pre('update', function() {
     this.update({}, { $set: { updatedAt: new Date() } });
 });
 
-//send verify email
+//send notify email to admin to let them know about newly created comment by users
 commentSchema.methods.sendNotifyEmail = function() {
     var self = this;
 

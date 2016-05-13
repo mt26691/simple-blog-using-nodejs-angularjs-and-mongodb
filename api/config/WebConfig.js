@@ -4,5 +4,7 @@ module.exports = {
     "url": "http://localhost:3000",
     "resetPasswordUrl": "/reset-password/",
     "defaultEmail": "nguyenmanhtung848@gmail.com",
-    "defaultName": "Nguyen Manh Tung"
+    "defaultName": "Nguyen Manh Tung",
+    "defaultAdminAccount":"abcxyz@gmail.com",
+    "defaultAdminPassword":"xxxxxx"
 };

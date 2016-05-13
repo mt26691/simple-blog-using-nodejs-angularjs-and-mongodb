@@ -1,3 +1,10 @@
+/**
+* User route
+*
+* @module      :: User route
+* @description	:: CRUD user
+*/
+
 var express = require('express');
 var router = express.Router();
 var useController = require("../controllers/v1/admin/UserController");
