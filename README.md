@@ -36,6 +36,7 @@ npm install
 
 ## Starting
 Open cmd/terminal and run this command
+
 **Start by npm**
 ```
 npm start
@@ -44,13 +45,25 @@ npm start
 ```
 gulp
 ```
-If you start by gulp default task by the command above, the server will reset everytime you change the code.
+If you start by gulp default task by the command above, the server will restart everytime you change the code.
 So you will always get the lastest version.
 
 ##Testing
 This project use [SuperTest](https://github.com/visionmedia/supertest) 
+
 **Test api**
 ```
 npm test
 ```
-See package.config to change test file or use this pattern *.test.js to test all files
+See package.config to change test file or use this pattern ** *.test.js** to test all files
+
+##Code flows
+```
+1. When start server, it will run bin/www file.
+2. www file will load app.js file, this is the main file of this project.
+3. App js will load route, layout, email settings and connect to mongodb server.
+4. Every request from client will be catched by route settings, located in /api/routes folder.
+```
+To understand more about the code flows, please read the test api files, located in /test folder
+##Support
+**If you have any question, please send email to **nguyenmanhtung848@gmail.com**
