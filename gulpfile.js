@@ -2,10 +2,8 @@ var gulp = require('gulp'),
     nodemon = require('gulp-nodemon'),
     mocha = require('gulp-mocha'),
     env = require('gulp-env');
-var linker = require('gulp-linker');
 var concat = require('gulp-concat');
 var cssnano = require('gulp-cssnano');
-var jsmin = require('gulp-jsmin');
 var uglify = require('gulp-uglify');
 var inject = require('gulp-inject');
 var pipeLine = require('./tasks/pipeline');
@@ -72,7 +70,5 @@ gulp.task("production", function () {
     // Write modified files to views 
         .pipe(gulp.dest('./views'));
 });
-
-//gulp.task('default', ['linkerJS','linkerCSS','nodemon', 'mocha', 'watch']);
 
 gulp.task('default', ['inject', 'nodemon']);
