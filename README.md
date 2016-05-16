@@ -21,12 +21,12 @@ npm install -g gulp
 ```
 This command will install gulp into your computer. Gulp is a task/build runner for developement.
 In this project it helps:
-*1/ Inject css, js files to layout.
-*2/ Minify css, js files and concentrate it to one big file
-*3/ Help restart node if code is changed.
+1. Inject css, js files to layout.
+2. Minify css, js files and concentrate it to one big file
+3. Help restart node if code is changed.
 
 ***2/ Open cmd/terminal and navigate to project, and install project's dependencies***
 ```
 npm install
 ```
-*This command will install all dependencies belonging to this project (see package.js file)
+- This command will install all dependencies belonging to this project (see package.js file)
