@@ -1,13 +1,12 @@
-# simple-blog-using-nodejs-angularjs-and-mongodb
-A Simple blog using nodejs angularjs and mongodb
+#A Simple blog using nodejs expressjs angularjs and mongodb
 
 ## Installation
 
 **Prerequisites**
- - ([Git - how to install](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git))
- - ([Nodejs](https://nodejs.org/en/))
- - ([Mongodb](https://www.mongodb.org/))
- - ([GraphicsMagick 64bit](http://www.graphicsmagick.org/download.html))
+ - [Git - how to install](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+ - [Nodejs](https://nodejs.org/en/))
+ - [Mongodb](https://www.mongodb.org/)
+ - [GraphicsMagick 64bit](http://www.graphicsmagick.org/download.html)
  
  **Clone repository**
 ```
