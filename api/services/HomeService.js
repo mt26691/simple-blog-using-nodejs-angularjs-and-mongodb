@@ -1,20 +1,17 @@
 /**
-* User Controller
-*
-* @module      :: Authentication Service, for log in, log out, get current user
-* @description	:: manage user
+* @module      :: Home service
+* @description	:: this service is used for getting data for home page, search page and article details
 */
-
 var model = require('../models/models')();
 var Article = model.Article;
 var Comment = model.Comment;
 var config = require("../config/WebConfig");
 var User = model.User;
 module.exports = {
-
+    //search articles
     search: function(key, page, callback) {
         var skip = 0;
-        //item per page
+        //items per page
         var itemsPerPage = config.itemsPerPage;
 
         if (page != null && !isNaN(page)) {
@@ -54,7 +51,7 @@ module.exports = {
                 });
             });
     },
-    //get article id based on article ID
+    //get article based on id
     get: function name(id, callback) {
         Article
             .findOne({ _id: id, isActive: true })

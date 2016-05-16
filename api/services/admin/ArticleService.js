@@ -1,8 +1,6 @@
 /**
-* User Controller
-*
-* @module      :: User Service
-* @description	:: manage user
+* @module      :: Article Service
+* @description	:: CRUD Article
 */
 
 var model = require('../../models/models')();
@@ -59,6 +57,7 @@ module.exports = {
                 });
             });
     },
+    
     //get article base on id
     'get': function(id, callback) {
         Article
@@ -76,7 +75,7 @@ module.exports = {
     //create, update article
     'post': function(article, callback) {
         article.name = article.name.trim();
-        article.nameUrl = helper.removeVietnameseChar(article.name);
+        article.nameUrl = helper.normalizeChars(article.name);
         //update article
         if (article.id) {
             Article.update({_id: article.id}, article, function(err, saveResult) {

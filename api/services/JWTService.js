@@ -1,3 +1,7 @@
+/**
+* @module      :: JWT service
+* @description	:: this service is used for encrypting and decrypting token
+*/
 var jwt = require('jsonwebtoken');
 
 // With this method we generate a new token based on payload we want to put on it

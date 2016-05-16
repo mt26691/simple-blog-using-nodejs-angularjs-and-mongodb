@@ -1,7 +1,5 @@
 /**
-* User Controller
-*
-* @module      :: UserService
+* @module      :: Comment Service
 * @description	:: CRUD User
 */
 
@@ -9,17 +7,17 @@ var model = require('../../models/models')();
 var User = model.User;
 var config = require("../../config/WebConfig");
 module.exports = {
-    //query user base on certain operation
+    //query users
     'query': function (queryData, callback) {
         var skip = 0;
-        //item per page
+        //items per page, it is used for pagination
         var itemsPerPage = config.itemsPerPage;
         if (queryData.page != null && !isNaN(queryData.page)) {
             skip = (queryData.page - 1) * itemsPerPage;
         }
         var realQueryData = {};
         if (queryData.keyword && queryData.keyword.length > 0) {
-            //find subject which nam contains queryData.keyword
+            //find user whose name or email contains queryData.keyword
             realQueryData = { 
                 $or: [
                         //fint with case insentivie
@@ -30,7 +28,7 @@ module.exports = {
 
         User
             .find(realQueryData)
-        //query everything except the field below
+            //query everything except the field below
             .select({ verifyAccountToken: 0, passwordResetToken: 0, password: 0, updatedAt: 0, __v: 0 })
             .sort({ createdAt: 'desc' })
             .skip(skip)
@@ -101,7 +99,8 @@ module.exports = {
             }
         });
     },
-    //delete user by its id
+    
+    //delete user by id
     'delete': function (userId, callback) {
         User.findOne({ _id: userId }, function (err, foundUser) {
             if (foundUser){

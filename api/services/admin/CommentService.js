@@ -1,8 +1,6 @@
 /**
-* User Controller
-*
-* @module      :: User Service
-* @description	:: manage user
+* @module      :: Comment Service
+* @description	:: CRUD Comment
 */
 
 var model = require('../../models/models')();
@@ -14,23 +12,23 @@ var helper = require("../HelperService");
 var Subject = model.Subject;
 
 module.exports = {
-    //query lecture
+    //query comment
     'query': function(queryData, callback) {
         var skip = 0;
-        //item per page
+        //items per page
         var itemsPerPage = config.itemsPerPage;
         if (queryData.page != null && !isNaN(queryData.page)) {
             skip = (queryData.page - 1) * itemsPerPage;
         }
         var realQueryData = {};
         if (queryData.keyword && queryData.keyword.length > 0) {
-            //find chapter which name contains queryData.keyword
+            //find comment which content contains queryData.keyword
             realQueryData = { "content": { $regex: ".*" + queryData.keyword + ".*" } };
         }
 
         var query = Comment.find(realQueryData);
 
-        //query builder
+        //query builder for is Active field
         if (queryData.isActive != null && queryData.isActive != '') {
             query.where('isActive').equals(queryData.isActive);
         }
@@ -58,7 +56,7 @@ module.exports = {
             });
     },
 
-    //get base on id
+    //get comment based on id
     'get': function(id, callback) {
         Comment
             .findOne({ _id: id })
@@ -112,7 +110,8 @@ module.exports = {
             });
         }
     },
-    //delete comment by its id
+    
+    //delete comment by id
     'delete': function(id, callback) {
         Comment.findOne({ _id: id }, function(err, foundComment) {
             if (err) {

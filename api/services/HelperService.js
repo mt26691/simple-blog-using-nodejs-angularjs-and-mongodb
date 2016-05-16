@@ -1,25 +1,18 @@
 /**
- * Kue job queue holder
- *
- * Queue will be loaded into this object in bootstrap.js
- */
+* @module      :: Helper Service
+* @description	:: Some common functions
+*/
 var path = require('path');
 var crypto = require('crypto');
 var unorm = require('unorm');
 
 module.exports = {
-    getRandomSecret: function (callback) {
-        crypto.randomBytes(64, function (err, buf) {
-            if (err) {
-                return callback(err);
-            }
-            callback(null, buf.toString('hex'));
-        });
-    },
-
+    //replace all, extension method for javascript
     replaceAll: function replaceAll(str, find, replace) {
         return str.replace(new RegExp(find, 'g'), replace);
     },
+    //get real file name for uploaded file. we replace space with - to enhance 
+    //user experience
     getRealFileName: function (realName) {
         realName = this.replaceAll(realName, " ", "-");
         //get file extension
@@ -33,13 +26,17 @@ module.exports = {
         return fileName + date.getTime() + extension.toLowerCase();
 
     },
+    //get uploaded folder
     getUploadFolder: function () {
         var currentDate = new Date();
         var year = currentDate.getFullYear().toString();
         var month = (currentDate.getMonth() + 1).toString();
         return year + "-" + month;
     },
-    removeVietnameseChar: function (str) {
+    //normalize chars
+    //this method is used for creating user friendly url.
+    //we will replace unicode chars to standard ascii chars.
+    normalizeChars: function (str) {
         var changes;
 
         str = str.normalize("NFKC");
@@ -58,6 +55,7 @@ module.exports = {
 
     }
     ,
+    //mapping bettween unicode chars and ascii chars
     defaultDiacriticsRemovalMap: [{ 'base': 'A', 'letters': /[\u0041\u24B6\uFF21\u00C0\u00C1\u00C2\u1EA6\u1EA4\u1EAA\u1EA8\u00C3\u0100\u0102\u1EB0\u1EAE\u1EB4\u1EB2\u0226\u01E0\u00C4\u01DE\u1EA2\u00C5\u01FA\u01CD\u0200\u0202\u1EA0\u1EAC\u1EB6\u1E00\u0104\u023A\u2C6F]/g },
         { 'base': 'AA', 'letters': /[\uA732]/g },
         { 'base': 'AE', 'letters': /[\u00C6\u01FC\u01E2]/g },
