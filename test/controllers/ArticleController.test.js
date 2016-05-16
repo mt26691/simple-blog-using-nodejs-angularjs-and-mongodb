@@ -5,6 +5,10 @@ var server = supertest.agent(testConfig.host + ":" + testConfig.port);
 var apiURL = testConfig.apiArticleUrl;
 var initData = require('../initData');
 
+/*
+* See /api/controllers/v1/admin/ArticleController.js  
+* and /api/routes/articleRoutes.js for more details
+*/
 describe('Admin Article Controller Test', function() {
     var newUsers = [];
     var oldUsers = [];
@@ -21,7 +25,7 @@ describe('Admin Article Controller Test', function() {
         });
     });
 
-    // See /api/controllers/v1/admin/ArticleController.js
+    //query method in in /api/controllers/v1/ArticleController.js
     it('should not let normal user query all articles', function(done) {
         var apiLogin = testConfig.apiLogin;
         server
@@ -53,7 +57,7 @@ describe('Admin Article Controller Test', function() {
                 res.status.should.equal(200);
                 assert.equal(true, !res.body.err);  // check if login is ok
                 server
-                    .get(apiURL)  // query first first subjects
+                    .get(apiURL)  // query lastest articles
                     .expect('Content-type', /json/)
                     .end(function(err, res) {
                         res.status.should.equal(200);  // query OK because I am ADMIN 
@@ -172,7 +176,7 @@ describe('Admin Article Controller Test', function() {
     });
 
     // get in /api/controllers/v1/ArticleController.js
-    it('should not let normal user query article by its id', function(done) {  // modify 'get' in policies.js 
+    it('should not let normal user query article by its id', function(done) {
         var apiAuth = testConfig.apiLogin;
         server
             .post(apiAuth)

@@ -5,9 +5,11 @@ var server = supertest.agent(testConfig.host + ":" + testConfig.port);
 var apiURL = testConfig.homeApi;
 var initData = require('../initData');
 
-// see more at /api/controllers/v1/HomeController.js
-// and /api/routes/homeRoutes.js
-describe('Admin Home Controller Test', function() {
+/*
+* See /api/controllers/v1/HomeController.js  
+* and /api/routes/homeRoutes.js for more details
+*/
+describe('Home Controller Test', function() {
     var newUsers = [];
     var oldUsers = [];
     var newArticles = [];
@@ -23,7 +25,7 @@ describe('Admin Home Controller Test', function() {
         });
     });
 
-    //search in HomeController
+    //search method in /api/controllers/v1/HomeController.js  
     it('user go to home page and see all active article', function(done) {
         server
             .get(apiURL)
@@ -39,7 +41,7 @@ describe('Admin Home Controller Test', function() {
 
     });
 
-    //search in HomeController
+     //search method in /api/controllers/v1/HomeController.js  
     it('user go to page 2 and see the articles in page 2', function(done) {
         server
             .get(apiURL + "?page=2")
@@ -54,7 +56,7 @@ describe('Admin Home Controller Test', function() {
 
     });
 
-    //get in HomeController
+    //get method in /api/controllers/v1/HomeController.js  
     it('user can see active articles details', function(done) {
         server
             .get(testConfig.homeApi + newArticles[1].nameUrl + "/" + newArticles[1].id)
@@ -67,7 +69,7 @@ describe('Admin Home Controller Test', function() {
             });
     });
 
-    //get in HomeController
+     //get method in /api/controllers/v1/HomeController.js  
     it('user can not see inactive articles details', function(done) {
         server
             .get(testConfig.homeApi + newArticles[1].nameUrl + "/" + newArticles[7].id)
@@ -79,7 +81,7 @@ describe('Admin Home Controller Test', function() {
             });
     });
 
-    //get in api/v1/admin/CommentController.js
+    //get method in /api/controllers/v1/HomeController.js  
     it('user can not see lecture with wrong url', function(done) {
         server
             .get(testConfig.homeApi + newArticles[1].nameUrl + "/")

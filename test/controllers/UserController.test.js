@@ -4,7 +4,11 @@ var testConfig = require('../testConfig');
 var server = supertest.agent(testConfig.host + ":" + testConfig.port);
 var apiURL = testConfig.apiUserUrl;
 var initData = require('../initData');
-// see more at /api/controllers/v1/admin/UserController
+
+/*
+* See /api/controllers/v1/admin/UserController.js  
+* and /api/routes/userRoutes.js for more details
+*/
 describe('User admin controller test', function() {
     var newUsers = [];
     var oldUsers = [];
@@ -16,7 +20,7 @@ describe('User admin controller test', function() {
             done();
         });
     });
-
+    //query method in /api/controllers/v1/admin/UserController.js  
     it('should not let normal user query all users', function(done) {
         var apiAuth = testConfig.apiLogin;
         server
@@ -37,7 +41,7 @@ describe('User admin controller test', function() {
 
     });
 
-    //query in UserController
+    //query method in /api/controllers/v1/admin/UserController.js  
     it('should let only admin query users', function(done) {
         var apiAuth = testConfig.apiLogin;
         server
@@ -68,7 +72,8 @@ describe('User admin controller test', function() {
 
     });
 
-    //query in UserController page 2
+    //query method in /api/controllers/v1/admin/UserController.js
+    //with param  {page:2}
     it('should let admin query user in page 2', function(done) {
         var apiAuth = testConfig.apiLogin;
         server
@@ -100,8 +105,9 @@ describe('User admin controller test', function() {
             });
 
     });
-
-    //query all user which name contains user06
+    
+    //query method in /api/controllers/v1/admin/UserController.js
+    //with param  {keyword:'user06'}
     it('should let admin query user which name contain user06', function(done) {
         var apiAuth = testConfig.apiLogin;
         server
@@ -132,8 +138,9 @@ describe('User admin controller test', function() {
             });
 
     });
-
-    //query all user which name contains user in page 2
+    
+    //query method in /api/controllers/v1/admin/UserController.js
+    //with param  {keyword:'user', page : 2}
     it('should let admin query user which name contains user in page 2', function(done) {
         var apiAuth = testConfig.apiLogin;
         server
@@ -166,7 +173,7 @@ describe('User admin controller test', function() {
 
     });
 
-    //get in UserController
+    //get method in /api/controllers/v1/admin/UserController.js
     it('should not let normal user query an user by its id', function(done) {
         var apiAuth = testConfig.apiLogin;
         server
@@ -188,7 +195,7 @@ describe('User admin controller test', function() {
             });
     });
 
-    //get in UserController
+    //get method in /api/controllers/v1/admin/UserController.js
     it('should let only admin query an user by its id', function(done) {  // modify 'get' in policies.js 
         var apiAuth = testConfig.apiLogin;
         server
@@ -216,7 +223,7 @@ describe('User admin controller test', function() {
             });
     });
 
-    //post in UserController
+    //post method in /api/controllers/v1/admin/UserController.js
     it('should not let normal user update other user', function(done) {
         var updatingUser = newUsers[0];
         updatingUser.name = "test new name";
@@ -245,7 +252,7 @@ describe('User admin controller test', function() {
 
     });
 
-    //post in UserController
+    //post method in /api/controllers/v1/admin/UserController.js
     it('should let only admin update a user', function(done) {
         var updatingUser = newUsers[0];
         updatingUser.name = "test new name";
@@ -273,8 +280,9 @@ describe('User admin controller test', function() {
             });
 
     });
-
-    //post in UserController, it does not let admin change user with duplicate email
+    
+    //post method in /api/controllers/v1/admin/UserController.js
+    //it does not let admin change user with duplicate email
     it('should not let admin update user with duplicate email', function(done) {
         var updatingUser = newUsers[0];
         updatingUser.name = "test new name";
@@ -302,8 +310,9 @@ describe('User admin controller test', function() {
             });
 
     });
-
-    //post in UserController, it does not let admin change user 
+    
+    //post method in /api/controllers/v1/admin/UserController.js
+    //it does not let admin change user 
     it('should not let admin update user with missing fields', function(done) {
         var updatingUser = newUsers[0];
         updatingUser.name = "test new name";
@@ -332,7 +341,7 @@ describe('User admin controller test', function() {
 
     });
 
-    //delete in UserController.js
+    //delete method in /api/controllers/v1/admin/UserController.js
     it('should not let normal user delete user', function(done) {
         var apiAuth = testConfig.apiLogin;
         server
@@ -357,7 +366,7 @@ describe('User admin controller test', function() {
 
     });
 
-    //delete in UserController
+    //delete method in /api/controllers/v1/admin/UserController.js
     it('should let admin delete user', function(done) {
         var apiAuth = testConfig.apiAuthUrl + '/login/local';
         server

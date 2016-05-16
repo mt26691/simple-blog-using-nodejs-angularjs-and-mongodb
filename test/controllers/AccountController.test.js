@@ -5,8 +5,10 @@ var server = supertest.agent(testConfig.host + ":" + testConfig.port);
 var apiURL = testConfig.apiAccountUrl;
 var initData = require('../initData');
 
-// See /api/controllers/v1/AccountController.js and 
-// /api/routes/accountRoutes.js for more details
+/*
+* See /api/controllers/v1/AccountController.js  
+* and /api/routes/accountRoutes.js for more details
+*/
 describe('Account Controller test', function () {
     var newUsers = [];
     var oldUsers = [];
@@ -239,7 +241,6 @@ describe('Account Controller test', function () {
 
                         var returnedObj = res.body;
                         assert.equal(false, returnedObj.err);
-                        console.log("XXXXXXXXXXXXXXX");
                         //get me with new access token
                         var apiAuth1 = testConfig.apiAuthUrl + '/me';
                         server  // Get me

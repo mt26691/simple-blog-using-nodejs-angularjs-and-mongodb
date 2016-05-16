@@ -5,7 +5,10 @@ var server = supertest.agent(testConfig.host + ":" + testConfig.port);
 var apiURL = testConfig.apiCommenttUrl;
 var initData = require('../initData');
 
-// See /api/controllers/v1/admin/CommentController.js
+/*
+* See /api/controllers/v1/admin/CommentController.js  
+* and /api/routes/commentRoutes.js for more details
+*/
 describe('Admin Comment Controller Test', function() {
     var newUsers = [];
     var oldUsers = [];
@@ -26,7 +29,7 @@ describe('Admin Comment Controller Test', function() {
             done();
         });
     });
-
+    //query method in /api/controllers/v1/admin/CommentController.js 
     it('should not let normal user query all comments', function(done) {
         var apiAuth = testConfig.apiLogin;
         server
@@ -47,7 +50,7 @@ describe('Admin Comment Controller Test', function() {
 
     });
 
-    //query CommentController
+    //query method in /api/controllers/v1/admin/CommentController.js 
     it('should let only admin query all comments', function(done) {
         var apiAuth = testConfig.apiLogin;
         server
@@ -105,7 +108,7 @@ describe('Admin Comment Controller Test', function() {
 
     });
 
-    //query in api/v1/admin/CommentController.js with param: keyword = Comment content 05
+    //query method in api/v1/admin/CommentController.js with param: keyword = Comment content 05
     it('should let admin query comment which contain Comment content 05', function(done) {
         var apiAuth = testConfig.apiLogin;
         server
@@ -138,7 +141,7 @@ describe('Admin Comment Controller Test', function() {
 
     });
 
-    //query in api/v1/admin/CommentController.js with param: keyword = Comment, page = 2
+    //query method in api/v1/admin/CommentController.js with param: keyword = Comment, page = 2
     it('should let admin query comment which content contain Comment in page 2', function(done) {
         var apiAuth = testConfig.apiLogin;
         server
@@ -167,7 +170,7 @@ describe('Admin Comment Controller Test', function() {
             });
     });
 
-    //get in api/v1/admin/CommentController.js
+    //get method in api/v1/admin/CommentController.js
     it('should not let normal user query comment by its id', function(done) {
 
         server
@@ -189,7 +192,7 @@ describe('Admin Comment Controller Test', function() {
             });
     });
 
-    //get in api/v1/admin/CommentController.js
+    //get method in api/v1/admin/CommentController.js
     it('should let only admin query comment by its id', function(done) {
         server
             .post(testConfig.apiLogin)
@@ -214,7 +217,7 @@ describe('Admin Comment Controller Test', function() {
             });
     });
 
-    //post in api/v1/admin/CommentController.js
+    //post method in api/v1/admin/CommentController.js
     it('should let normal user create comment only', function(done) {
         var updatingItem = oldComments[5];
         updatingItem.content = "test new comment";
@@ -239,7 +242,7 @@ describe('Admin Comment Controller Test', function() {
 
     });
 
-    //post in api/v1/admin/CommentController.js
+    //post method in api/v1/admin/CommentController.js
     it('should not let normal user update comment', function(done) {
         var updatingItem = newComments[4];
         updatingItem.content = "test new comment";
@@ -264,7 +267,7 @@ describe('Admin Comment Controller Test', function() {
 
     });
 
-    //post in api/v1/admin/CommentController.js
+    //post method in api/v1/admin/CommentController.js
     it.only('should let only admin update all comment', function(done) {
         var newlyItem = newComments[0];
         newlyItem.content = "test content";
@@ -293,7 +296,7 @@ describe('Admin Comment Controller Test', function() {
 
     });
 
-    //delete in api/v1/admin/CommentController.js
+    //delete method in api/v1/admin/CommentController.js
     it('should not let normal users delete another comments', function(done) {
         server
             .post(testConfig.apiLogin)
@@ -314,7 +317,7 @@ describe('Admin Comment Controller Test', function() {
 
     });
 
-    //delete in api/v1/admin/CommentController.js
+    //delete method in api/v1/admin/CommentController.js
     it.only('should let admin delete all comments', function(done) {
         server
             .post(testConfig.apiLogin)

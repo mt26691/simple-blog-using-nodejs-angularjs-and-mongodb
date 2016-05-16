@@ -4,7 +4,10 @@ var testConfig = require('../testConfig');
 var server = supertest.agent(testConfig.host + ":" + testConfig.port);
 var initData = require('../initData');
 
-// See /api/controllers/v1/AuthController.js
+/*
+* See /api/controllers/v1/AuthController.js  
+* and /api/routes/authRoutes.js for more details
+*/
 describe('Authentication controller test', function() {
     var newUsers = [];
     var oldUsers = [];
@@ -16,7 +19,9 @@ describe('Authentication controller test', function() {
             done();
         });
     });
-    //login
+    
+    //login method
+    //see /api/controllers/v1/AuthController logIn method
     it('should not let wrong email and password log in ', function(done) {
         var apiAuth = testConfig.apiLogin;
         var user = oldUsers[0];
@@ -32,7 +37,7 @@ describe('Authentication controller test', function() {
                 done();
             });
     });
-
+    
     it('should let user log in if they provide right username and password', function(done) {
         var apiAuth = testConfig.apiLogin;
         server  // login
@@ -49,7 +54,7 @@ describe('Authentication controller test', function() {
             });
     });
 
-    // see route api/v1/auth/logout
+    // see /api/controllers/v1/AuthController logOut method
     it('should let user logout', function(done) {
         var apiAuth = testConfig.apiLogin;
         server  // login
