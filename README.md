@@ -15,7 +15,7 @@ git clone https://github.com/mt26691/simple-blog-using-nodejs-angularjs-and-mong
 
 ##Install dependencies
 
-**1/ After installing nodejs open command prompt or terminal and run this command**
+**1/ After installing nodejs open cmd/terminal and run this command**
 ```
 npm install -g gulp
 ```
@@ -26,9 +26,31 @@ In this project it helps:
 2. Minify css, js files and concentrate it to one big file
 3. Help restart node if code is changed.
 ```
+See gulpfile.js for more details
 
 **2/ Open cmd/terminal and navigate to project, and install project's dependencies**
 ```
 npm install
 ```
 - This command will install all dependencies belonging to this project (see package.js file)
+
+## Starting
+Open cmd/terminal and run this command
+**Start by npm**
+```
+npm start
+```
+**Start by gulp**
+```
+gulp
+```
+If you start by gulp default task by the command above, the server will reset everytime you change the code.
+So you will always get the lastest version.
+
+##Testing
+This project use [SuperTest](https://github.com/visionmedia/supertest) 
+**Test api**
+```
+npm test
+```
+See package.config to change test file or use this pattern *.test.js to test all files
