@@ -55,7 +55,7 @@ This project use [SuperTest](https://github.com/visionmedia/supertest)
 ```
 npm test
 ```
-See package.config to change test file or use this pattern ** *.test.js** to test all files
+See package.config to change test file or use this pattern *.test.js to test all files
 
 ##Code flows
 ```
