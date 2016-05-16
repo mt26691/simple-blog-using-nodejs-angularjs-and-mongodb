@@ -66,4 +66,4 @@ See package.config to change test file or use this pattern *.test.js to test all
 ```
 To understand more about the code flows, please read the test api files, located in /test folder
 ##Support
-**If you have any question, please send email to nguyenmanhtung848@gmail.com
+**If you have any question, please send email to nguyenmanhtung848@gmail.com**
