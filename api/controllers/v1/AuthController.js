@@ -13,7 +13,7 @@ module.exports = {
     'login': function(req, res) {
         //get post data
         var data = { email: req.body.email, password: req.body.password, isRemember: req.body.isRemember };
-        authService.logIn(data, function(err, user) {
+        authService.login(data, function(err, user) {
             if (err) {
                 return res.status(200).json({ err: true, msg: "server error" });
             }
@@ -34,11 +34,7 @@ module.exports = {
                 //save with new access token
                 var clientToken = jwtService.issueToken(user.accessToken);
 
-                var returnUser = { name: user.name, role: user.role, accessRight: 1 };
-                //if user is admin, set access right to 9
-                if (returnUser.role == "admin") {
-                    returnUser.accessRight = 9;
-                }
+                var returnUser = { name: user.name, role: user.role, accessRight: user.accessRight };
 
                 var returnedData = { token: clientToken, isRemember: data.isRemember };
 

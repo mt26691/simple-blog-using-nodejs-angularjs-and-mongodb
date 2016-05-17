@@ -27,7 +27,7 @@ module.exports = function (req, res, next) {
         //get only id, name, email, role
         AccessToken
             .findOne({ key: decryptedData })
-            .populate('user', 'id name email role')
+            .populate('user', 'id name email role accessRight')
             .exec(function (err, foundAccessToken) {
 
                 if (err || !foundAccessToken) {

@@ -177,13 +177,7 @@ module.exports = {
         if (req.user == null) {
             return res.status(200).json({});
         }
-        var accessRight = 0;
-        if (req.user.role == 'admin') {
-            accessRight = 9;
-        }
-        else if (req.user.role == 'editor') {
-            accessRight = 8;
-        }
-        return res.status(200).json({ name: req.user.name, email: req.user.email, role: req.user.role, accessRight: accessRight });
+        
+        return res.status(200).json({ name: req.user.name, email: req.user.email, role: req.user.role, accessRight: req.user.accessRight });
     }
 };

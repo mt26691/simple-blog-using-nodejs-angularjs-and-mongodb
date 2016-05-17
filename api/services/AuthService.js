@@ -9,7 +9,7 @@ var AccessToken = model.AccessToken;
 var crypto = require("crypto");
 module.exports = {
     //help user log in to system
-    'logIn': function (values, callback) {
+    'login': function (values, callback) {
         //check user email
         User.findOne({ email: values.email }, function (err, foundUser) {
             if (err) {
