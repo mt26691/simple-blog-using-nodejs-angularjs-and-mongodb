@@ -6,6 +6,6 @@ module.exports = {
     //default email log account
     "defaultEmail": "nguyenmanhtung848@gmail.com",
     "defaultName": "Nguyen Manh Tung",
-    "defaultAdminAccount": "abcxyz@gmail.com",
-    "defaultAdminPassword": "xxxxxx"
+    "defaultAdminAccount": "266127@gmail.com",
+    "defaultAdminPassword": "38133813"
 };

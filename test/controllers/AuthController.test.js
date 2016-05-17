@@ -48,7 +48,6 @@ describe('Authentication controller test', function() {
                 assert.equal(true, !res.body.err);
                 var returnedUser = res.body.user;
                 assert.equal(newUsers[0].name, returnedUser.name);
-                assert.equal(newUsers[0].email, returnedUser.email);
                 assert.equal(false, 'password' in returnedUser);  // server removed password from object for security
                 done();
             });
@@ -65,9 +64,8 @@ describe('Authentication controller test', function() {
                 var returnedUser = res.body.user;
                 var token = res.body.token;
                 assert.equal(true, !res.body.err);
-                assert.equal(newUsers[0].email, returnedUser.email);
-
-                var apiAuth1 = testConfig.apiAuthUrl + '/me';
+                assert.equal(newUsers[0].name, returnedUser.name);
+                var apiAuth1 = testConfig.apiAccountUrl + '/me';
 
                 server  // Get me
                     .get(apiAuth1)
@@ -76,7 +74,6 @@ describe('Authentication controller test', function() {
                         var me = res.body;
                         assert.equal(true, !res.body.err);
                         assert.equal(returnedUser.name, me.name);
-                        assert.equal(returnedUser.email, me.email);
                         assert.equal(false, 'password' in me);  // server removed password from object for security
 
                         var apiAuth2 = testConfig.apiLogout;

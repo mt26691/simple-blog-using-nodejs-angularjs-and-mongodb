@@ -81,7 +81,6 @@ module.exports = {
             if (err) {
                 return res.status(500).json({ err: true, msg: "Server error in CommentCotroller/post" });
             }
-
             if (req.user.role != 'admin' && result) {
                 //send notify email to admin
                 data.sendNotifyEmail();

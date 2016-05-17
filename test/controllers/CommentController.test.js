@@ -235,7 +235,7 @@ describe('Admin Comment Controller Test', function() {
                     .expect("Content-type", /json/)
                     .expect(200)
                     .end(function(err, res) {
-                        assert(false, res.body.err);
+                        assert.equal(false, res.body.err);
                         done();
                     });
             });
@@ -268,7 +268,7 @@ describe('Admin Comment Controller Test', function() {
     });
 
     //post method in api/v1/admin/CommentController.js
-    it.only('should let only admin update all comment', function(done) {
+    it('should let only admin update all comment', function(done) {
         var newlyItem = newComments[0];
         newlyItem.content = "test content";
 
@@ -318,7 +318,7 @@ describe('Admin Comment Controller Test', function() {
     });
 
     //delete method in api/v1/admin/CommentController.js
-    it.only('should let admin delete all comments', function(done) {
+    it('should let admin delete all comments', function(done) {
         server
             .post(testConfig.apiLogin)
             .send(oldUsers[1])  // log in as admin

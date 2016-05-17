@@ -100,7 +100,7 @@ describe('Admin Article Controller Test', function() {
                         assert.equal(true, returnedData.length <= testConfig.itemsPerPage);
                         //becase we have 6 record in database (initData.js)
                         //page size = 5, so the number of database in page 2 must be 1
-                        assert.equal(1, returnedData.length);
+                        assert.equal(3, returnedData.length);
                         done();
                     });
 
@@ -168,7 +168,7 @@ describe('Admin Article Controller Test', function() {
                         assert.equal(true, returnedData.length <= testConfig.itemsPerPage);
                         //because we query data in page 2, page size = 5 so the return data must
                         //contain only one article
-                        assert.equal(1, returnedData.length);
+                        assert.equal(3, returnedData.length);
                         done();
                     });
             });

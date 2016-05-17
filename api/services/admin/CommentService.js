@@ -105,6 +105,7 @@ module.exports = {
                     if (err) {
                         return callback(null, false, "error while creating new comment");
                     }
+                    
                     return callback(null, true, "Comment saved", savedComment);
                 });
             });

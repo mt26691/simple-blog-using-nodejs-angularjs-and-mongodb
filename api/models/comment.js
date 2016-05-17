@@ -58,10 +58,9 @@ commentSchema.methods.sendNotifyEmail = function() {
             },
             template: 'user-comment'
         }
-
+        
         //send email
         emailService.send(emailData, function(err, resData) {
-
         });
     });
 
